@@ -35,7 +35,7 @@ const pricingPlans = [
     image: '/vps.jpeg',
     priceUSD: 4.49,
     features: ['Full root access', 'NVMe SSD storage', '99.9% uptime SLA', 'Multiple OS options', 'Daily backups'],
-    buttonText: 'Get started',
+    buttonText: 'View plans',
     popular: false,
     link: '/vps',
     badge: null,
