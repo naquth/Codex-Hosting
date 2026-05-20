@@ -4,22 +4,49 @@
 
 @layer base {
   body {
-    /* Atur gambar background dari folder public */
-    background-image: url('/background.png');
-    
-    /* Pastikan gambar menutupi seluruh layar */
-    background-size: cover;
-    
-    /* Posisikan gambar di tengah */
-    background-position: center;
-    
-    /* Buat background 'fixed' agar tidak ikut scroll */
-    background-attachment: fixed;
-    
-    /* Hindari gambar berulang */
-    background-repeat: no-repeat;
-    
-    /* Beri warna dasar jika gambar gagal dimuat */
-    background-color: #0c0a18;
+    background-color: #080b12;
+    color: #e2e8f0;
+  }
+
+  ::selection {
+    background-color: #2563eb40;
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .section-divider {
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* Smooth fade edges for marquee */
+  .marquee-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+
+  .marquee-track-slow {
+    display: flex;
+    width: max-content;
+    animation: marquee 50s linear infinite;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Subtle grid overlay */
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
   }
 }

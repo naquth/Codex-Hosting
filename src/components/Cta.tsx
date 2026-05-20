@@ -1,57 +1,72 @@
 import { motion } from 'framer-motion';
-import DiscordLogo from '../icons/DiscordLogo'; // Impor ikon yang baru kita buat
+import { ArrowRight } from 'lucide-react';
+import DiscordLogo from '../icons/DiscordLogo';
 
-const Cta = () => {
-  return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-          className="relative bg-blue-600 rounded-2xl p-8 md:p-12 overflow-hidden"
-        >
-          {/* === Ikon-ikon dekoratif di background === */}
-          <DiscordLogo className="absolute -top-4 -left-4 w-24 h-24 text-blue-500/30 opacity-50 transform rotate-12" />
-          <DiscordLogo className="absolute -bottom-6 right-1/3 w-16 h-16 text-blue-500/30 opacity-50 transform -rotate-12" />
-          <DiscordLogo className="absolute top-1/2 -translate-y-1/2 left-1/3 w-12 h-12 text-blue-500/30 opacity-50" />
-          
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* === Kolom Kiri: Teks Ajakan === */}
-            <div>
-              <div className="flex items-center gap-4 mb-4">
-                <DiscordLogo className="w-12 h-12 text-white" />
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Join Our <span className="font-extrabold">Discord</span>
-                </h2>
+const Cta = () => (
+  <section className="py-24 px-5 sm:px-8 section-divider">
+    <div className="max-w-7xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02]"
+      >
+        {/* Background glow */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center p-10 md:p-14">
+
+          {/* Left */}
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 bg-[#5865F2]/15 rounded-xl border border-[#5865F2]/20">
+                <DiscordLogo className="w-6 h-6 text-[#5865F2]" />
               </div>
-              <p className="text-blue-200 text-lg">
-                Connect with our community of gamers and developers.
-              </p>
-              <p className="text-blue-200 mt-2">
-                Get instant support, share experiences, and stay updated with the latest news.
-              </p>
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#7289da]">Discord Community</span>
             </div>
 
-            {/* === Kolom Kanan: Gambar/Tombol === */}
-            <div className="flex justify-center md:justify-end">
-                {/* Kita gunakan <a> tag agar bisa diklik dan mengarah ke link Discord */}
-              <a href="https://discord.gg/FnEe7xcYZQ" target="_blank" rel="noopener noreferrer">
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                  src="/joinus.png"
-                  alt="Join us on Discord"
-                  className="w-64 h-auto cursor-pointer"
-                />
-              </a>
-            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+              Join our community.<br />
+              <span className="text-gray-400 font-medium text-2xl sm:text-3xl">Get help, stay updated.</span>
+            </h2>
+
+            <p className="text-sm text-gray-400 mt-5 leading-relaxed max-w-sm">
+              Connect with thousands of developers and server owners. Get instant support and be first to hear about new features.
+            </p>
+
+            <a
+              href="https://discord.gg/FnEe7xcYZQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-8 bg-[#5865F2] hover:bg-[#4752c4] text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors"
+            >
+              <DiscordLogo className="w-4 h-4" />
+              Join Discord Server
+              <ArrowRight size={15} />
+            </a>
           </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+
+          {/* Right */}
+          <div className="flex justify-center md:justify-end">
+            <a
+              href="https://discord.gg/FnEe7xcYZQ"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <motion.img
+                whileHover={{ scale: 1.04, rotate: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                src="/joinus.png"
+                alt="Join us on Discord"
+                className="w-56 h-auto cursor-pointer drop-shadow-2xl"
+              />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
 
 export default Cta;

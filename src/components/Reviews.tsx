@@ -1,118 +1,98 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
-// Data untuk review
 const reviewsData = [
   {
     name: 'Alex Thompson',
     role: 'Bot Developer',
-    content:
-      'CodeX has been incredible for hosting my Discord bots. The uptime is amazing and support is top-notch!',
+    content: 'CodeX has been incredible for hosting my Discord bots. The uptime is amazing and support is top-notch!',
     rating: 5,
+    avatar: 'AT',
   },
   {
     name: 'Sarah Chen',
     role: 'Server Owner',
-    content:
-      'Best Minecraft hosting I\'ve used. Zero lag and great performance for our 100+ player community.',
+    content: 'Best Minecraft hosting I\'ve used. Zero lag and great performance for our 100+ player community.',
     rating: 5,
+    avatar: 'SC',
   },
   {
     name: 'Mike Rodriguez',
     role: 'Music Bot Creator',
-    content:
-      'Lavalink hosting is seamless. Crystal clear audio and never drops out. Highly recommend!',
+    content: 'Lavalink hosting is seamless. Crystal clear audio and never drops out. Highly recommend!',
     rating: 5,
+    avatar: 'MR',
   },
   {
     name: 'Jennifer Lee',
     role: 'Community Manager',
-    content:
-      'The control panel is intuitive and powerful. Managing our servers has never been easier. 10/10 service!',
+    content: 'The control panel is intuitive and powerful. Managing our servers has never been easier. 10/10 service!',
     rating: 5,
+    avatar: 'JL',
   },
 ];
 
-const Reviews = () => {
-  // Duplikasi data untuk loop animasi yang mulus
-  const duplicatedReviews = [...reviewsData, ...reviewsData];
+const duplicatedReviews = [...reviewsData, ...reviewsData];
 
-  return (
-    <section id="reviews" className="py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Tambahkan style JSX untuk animasi marquee */}
-      <style jsx>{`
-        .scroller-container {
-          overflow: hidden;
-          -webkit-mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
-          mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
-        }
-        .scroller-content {
-          display: flex;
-          width: max-content;
-          animation: scroll 40s linear infinite;
-        }
-        .scroller-container:hover .scroller-content {
-          animation-play-state: paused;
-        }
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
+const avatarColors = ['bg-blue-600', 'bg-violet-600', 'bg-emerald-600', 'bg-orange-600'];
 
-      <div className="max-w-7xl mx-auto">
-        {/* === Header Section === */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold text-white">
-            What Our <span className="text-blue-400">Customers Say</span>
-          </h2>
-          <p className="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">
-            Join thousands of satisfied developers and communities who trust CodeX.
-          </p>
-        </motion.div>
+const Reviews = () => (
+  <section id="reviews" className="py-24 px-5 sm:px-8 section-divider overflow-hidden">
+    <div className="max-w-7xl mx-auto">
 
-        {/* === Marquee Container === */}
-        <div className="scroller-container">
-          <div className="scroller-content space-x-8 py-4">
-            {duplicatedReviews.map((review, index) => (
-              <div
-                key={`${review.name}-${index}`}
-                className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 w-80 md:w-96 flex-shrink-0"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={20}
-                      className="text-yellow-400"
-                      fill="currentColor"
-                    />
-                  ))}
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-14"
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
+          Testimonials
+        </span>
+        <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+          Trusted by thousands.
+        </h2>
+        <p className="text-gray-400 text-sm mt-4">
+          Developers and communities who rely on CodeX every day.
+        </p>
+      </motion.div>
+
+      {/* Marquee */}
+      <div className="marquee-fade overflow-hidden">
+        <div className="marquee-track-slow py-2">
+          {duplicatedReviews.map((review, index) => (
+            <div
+              key={`${review.name}-${index}`}
+              className="flex-shrink-0 w-72 sm:w-80 mx-3 bg-white/[0.03] border border-white/[0.07] rounded-xl p-5 hover:border-white/[0.12] transition-colors"
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-4">
+                {Array.from({ length: review.rating }).map((_, i) => (
+                  <Star key={i} size={13} className="text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+
+              <p className="text-sm text-gray-300 leading-relaxed mb-5">
+                "{review.content}"
+              </p>
+
+              <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
+                <div className={`w-8 h-8 rounded-full ${avatarColors[index % avatarColors.length]} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
+                  {review.avatar}
                 </div>
-                <p className="text-gray-300 mb-4 leading-relaxed">
-                  "{review.content}"
-                </p>
-                <div className="border-t border-gray-700 pt-4">
-                  <h4 className="font-semibold text-white">{review.name}</h4>
-                  <p className="text-sm text-gray-400">{review.role}</p>
+                <div>
+                  <p className="text-xs font-semibold text-white">{review.name}</p>
+                  <p className="text-[11px] text-gray-500">{review.role}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Reviews;

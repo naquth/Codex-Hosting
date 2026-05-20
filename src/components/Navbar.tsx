@@ -1,9 +1,12 @@
-import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Bot, Server, Globe, Info, HelpingHand, FileText, Shield, BarChart, Music, LayoutDashboard, UserPlus } from 'lucide-react';
+import {
+  Menu, X, ChevronDown, Bot, Server, Globe,
+  Info, HelpingHand, FileText, Shield, BarChart,
+  Music, LayoutDashboard, UserPlus,
+} from 'lucide-react';
 
-// --- Data untuk dropdown menu dengan link yang benar ---
 const serviceItems = [
   { icon: Bot, name: 'Discord Bot', href: '/discord' },
   { icon: Server, name: 'Minecraft Server', href: '/minecraft' },
@@ -23,151 +26,237 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const handleMouseEnter = (menu: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(menu);
   };
-
   const handleMouseLeave = () => {
-    timeoutRef.current = window.setTimeout(() => setOpenDropdown(null), 100);
+    timeoutRef.current = window.setTimeout(() => setOpenDropdown(null), 120);
   };
-
-  const toggleMobileDropdown = (menu: string) => {
+  const toggleMobileDropdown = (menu: string) =>
     setMobileDropdown(mobileDropdown === menu ? null : menu);
-  };
-
   const closeAllMenus = () => {
     setIsMobileMenuOpen(false);
     setMobileDropdown(null);
   };
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 py-4 w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#080b12]/90 backdrop-blur-xl border-b border-white/[0.06]'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex-shrink-0 z-50">
-            <img src="/codex.png" alt="CodeX Logo" className="h-10 w-auto" />
+          {/* Logo */}
+          <Link to="/" className="flex-shrink-0">
+            <img src="/codex.png" alt="CodeX" className="h-8 w-auto" />
           </Link>
 
-          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2">
-            <div className="flex items-center space-x-2 bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-full px-4 py-2">
-              <Link to="/" className="text-gray-300 hover:text-white transition-colors text-sm font-medium px-3 py-1 rounded-full">Home</Link>
+          {/* Desktop nav – centered */}
+          <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+            <Link
+              to="/"
+              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                location.pathname === '/'
+                  ? 'text-white'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Home
+            </Link>
 
-              <div onMouseEnter={() => handleMouseEnter('services')} onMouseLeave={handleMouseLeave} className="relative">
-                <button className="flex items-center text-gray-300 hover:text-white transition-colors text-sm font-medium px-3 py-1 rounded-full">
-                  Services <ChevronDown size={16} className="ml-1" />
-                </button>
-                <AnimatePresence>
-                  {openDropdown === 'services' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full mt-3 w-96 -translate-x-1/4 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 grid grid-cols-2 gap-4"
-                    >
-                      {serviceItems.map(item => <DropdownItem key={item.name} {...item} />)}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div onMouseEnter={() => handleMouseEnter('more')} onMouseLeave={handleMouseLeave} className="relative">
-                <button className="flex items-center text-gray-300 hover:text-white transition-colors text-sm font-medium px-3 py-1 rounded-full">
-                  More <ChevronDown size={16} className="ml-1" />
-                </button>
-                <AnimatePresence>
-                  {openDropdown === 'more' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full mt-3 w-56 -translate-x-1/4 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-2"
-                    >
-                      {moreItems.map(item => <DropdownItem key={item.name} {...item} />)}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+            {/* Services dropdown */}
+            <div
+              onMouseEnter={() => handleMouseEnter('services')}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                Services
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${openDropdown === 'services' ? 'rotate-180' : ''}`}
+                />
+              </button>
+              <AnimatePresence>
+                {openDropdown === 'services' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full mt-2 w-72 -translate-x-1/4 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-2xl p-2 grid grid-cols-2 gap-1"
+                  >
+                    {serviceItems.map((item) => (
+                      <DropdownItem key={item.name} {...item} onClick={closeAllMenus} />
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
 
-          {/* ====== CTA Buttons: Register + Dashboard ====== */}
-          <div className="hidden md:flex items-center gap-2 z-50">
+            {/* More dropdown */}
+            <div
+              onMouseEnter={() => handleMouseEnter('more')}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                More
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${openDropdown === 'more' ? 'rotate-180' : ''}`}
+                />
+              </button>
+              <AnimatePresence>
+                {openDropdown === 'more' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full mt-2 w-52 -translate-x-1/4 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-2xl p-2"
+                  >
+                    {moreItems.map((item) => (
+                      <DropdownItem key={item.name} {...item} onClick={closeAllMenus} />
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </nav>
+
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-2">
             <Link
               to="/client/register"
-              className="flex items-center gap-1.5 text-gray-300 hover:text-white border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
             >
-              <UserPlus size={15} />
               Register
             </Link>
             <Link
               to="/client/login"
-              className="flex items-center gap-1.5 bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
             >
-              <LayoutDashboard size={15} />
+              <LayoutDashboard size={14} />
               Client Area
             </Link>
           </div>
 
-          <div className="md:hidden ml-4 z-50">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-300 hover:text-white">
-              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
+          >
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-xl md:hidden z-40"
-            onClick={closeAllMenus}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-[#0a0e1a]/95 backdrop-blur-xl border-b border-white/[0.06] overflow-hidden"
           >
-            <motion.div
-              initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.3 }}
-              className="absolute top-24 left-4 right-4 bg-gray-900/80 border border-gray-700 rounded-2xl p-6"
-              onClick={e => e.stopPropagation()}
-            >
-              <h2 className="text-white font-bold text-xl mb-4">Menu</h2>
-              <div className="flex flex-col space-y-2">
-                <Link to="/" onClick={closeAllMenus} className="text-gray-300 hover:bg-gray-800 p-3 rounded-lg transition-colors">Home</Link>
+            <div className="px-5 py-4 space-y-1">
+              <Link
+                to="/"
+                onClick={closeAllMenus}
+                className="block px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              >
+                Home
+              </Link>
 
-                <div className="border-t border-b border-gray-700">
-                  <button onClick={() => toggleMobileDropdown('services')} className="w-full flex justify-between items-center p-3 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors">
-                    <span>Services</span>
-                    <ChevronDown size={20} className={`transition-transform ${mobileDropdown === 'services' ? 'rotate-180' : ''}`} />
-                  </button>
-                  {mobileDropdown === 'services' && (
-                    <div className="pl-4 pb-2 mt-1 space-y-1">
-                      {serviceItems.map(item => <Link key={item.name} to={item.href} onClick={closeAllMenus} className="flex items-center gap-3 py-2 text-gray-400 hover:text-white"><item.icon size={18} />{item.name}</Link>)}
-                    </div>
-                  )}
-                </div>
-
-                <div className="border-b border-gray-700">
-                  <button onClick={() => toggleMobileDropdown('more')} className="w-full flex justify-between items-center p-3 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors">
-                    <span>More</span>
-                    <ChevronDown size={20} className={`transition-transform ${mobileDropdown === 'more' ? 'rotate-180' : ''}`} />
-                  </button>
-                  {mobileDropdown === 'more' && (
-                    <div className="pl-4 pb-2 mt-1 space-y-1">
-                      {moreItems.map(item => <Link key={item.name} to={item.href} onClick={closeAllMenus} className="flex items-center gap-3 py-2 text-gray-400 hover:text-white"><item.icon size={18} />{item.name}</Link>)}
-                    </div>
-                  )}
-                </div>
-
-                {/* Client Area links di mobile */}
-                <div className="pt-2 flex flex-col gap-2">
-                  <Link to="/client/register" onClick={closeAllMenus} className="flex items-center gap-2 text-gray-300 hover:bg-gray-800 p-3 rounded-lg transition-colors">
-                    <UserPlus size={18} /> Register
-                  </Link>
-                  <Link to="/client/login" onClick={closeAllMenus} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors font-semibold">
-                    <LayoutDashboard size={18} /> Client Area
-                  </Link>
-                </div>
+              <div>
+                <button
+                  onClick={() => toggleMobileDropdown('services')}
+                  className="w-full flex justify-between items-center px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                >
+                  Services
+                  <ChevronDown
+                    size={15}
+                    className={`transition-transform ${mobileDropdown === 'services' ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {mobileDropdown === 'services' && (
+                  <div className="pl-3 mt-1 space-y-0.5">
+                    {serviceItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={closeAllMenus}
+                        className="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-400 hover:text-white rounded-lg transition-colors"
+                      >
+                        <item.icon size={15} />
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
-            </motion.div>
+
+              <div>
+                <button
+                  onClick={() => toggleMobileDropdown('more')}
+                  className="w-full flex justify-between items-center px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                >
+                  More
+                  <ChevronDown
+                    size={15}
+                    className={`transition-transform ${mobileDropdown === 'more' ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {mobileDropdown === 'more' && (
+                  <div className="pl-3 mt-1 space-y-0.5">
+                    {moreItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={closeAllMenus}
+                        className="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-400 hover:text-white rounded-lg transition-colors"
+                      >
+                        <item.icon size={15} />
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-3 border-t border-white/[0.06] flex flex-col gap-2">
+                <Link
+                  to="/client/register"
+                  onClick={closeAllMenus}
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                >
+                  <UserPlus size={15} /> Register
+                </Link>
+                <Link
+                  to="/client/login"
+                  onClick={closeAllMenus}
+                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+                >
+                  <LayoutDashboard size={15} /> Client Area
+                </Link>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -175,9 +264,23 @@ const Navbar = () => {
   );
 };
 
-const DropdownItem = ({ icon: Icon, name, href }: { icon: React.ElementType, name: string, href: string }) => (
-  <Link to={href} className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-800 transition-colors text-gray-300 hover:text-white">
-    <Icon size={18} />
+const DropdownItem = ({
+  icon: Icon,
+  name,
+  href,
+  onClick,
+}: {
+  icon: React.ElementType;
+  name: string;
+  href: string;
+  onClick: () => void;
+}) => (
+  <Link
+    to={href}
+    onClick={onClick}
+    className="flex items-center gap-2.5 p-2.5 rounded-lg hover:bg-white/[0.06] transition-colors text-gray-400 hover:text-white group"
+  >
+    <Icon size={15} className="flex-shrink-0" />
     <span className="text-sm font-medium">{name}</span>
   </Link>
 );

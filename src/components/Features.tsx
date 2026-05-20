@@ -1,109 +1,65 @@
 import { motion } from 'framer-motion';
-import {
-  Cpu,
-  Zap,
-  ShieldCheck,
-  HeartPulse,
-  Settings,
-  BarChart,
-  Globe,
-  Cloud,
-} from 'lucide-react';
+import { Cpu, Zap, ShieldCheck, HeartPulse, Settings, BarChart, Globe } from 'lucide-react';
 
-// Data baru sesuai gambar referensi
 const featuresData = [
-  {
-    icon: Cpu,
-    title: 'High Performance',
-    description: 'Powered by latest generation processors for performance',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    icon: Zap,
-    title: 'Low Latency',
-    description: 'Optimized network infrastructure for minimal lag and delay',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Advanced Security',
-    description: 'Our system is protected by advanced, multi-layered security protocols designed to detect, isolate, and neutralize threats in real time.',
-    span: 'col-span-1 md:col-span-2 row-span-1', // Kartu ini lebih lebar
-  },
-  {
-    icon: HeartPulse,
-    title: 'Auto Recovery',
-    description: 'Automatic server recovery and backup systems',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    icon: Settings,
-    title: 'Full Control',
-    description: 'Complete server control panel with advanced configuration options',
-    span: 'col-span-1 row-span-1',
-  },
-    {
-    icon: BarChart,
-    title: 'Resource Scaling',
-    description: 'Dynamic resource allocation based on server demands',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    icon: Globe,
-    title: 'Global Network',
-    description: 'Worldwide server locations for optimal connectivity',
-    span: 'col-span-1 row-span-1',
-  },
+  { icon: Cpu,        title: 'High Performance',   description: 'Latest-gen processors deliver consistent speed under any workload.',         span: 'col-span-1' },
+  { icon: Zap,        title: 'Low Latency',         description: 'Optimised network routes minimise lag across every region.',                  span: 'col-span-1' },
+  { icon: ShieldCheck,title: 'Advanced Security',   description: 'Multi-layered DDoS mitigation and real-time threat neutralisation keep your service online around the clock.', span: 'md:col-span-2' },
+  { icon: HeartPulse, title: 'Auto Recovery',       description: 'Automatic failover and backup systems restore service in seconds.',           span: 'col-span-1' },
+  { icon: Settings,   title: 'Full Control',        description: 'Powerful control panel with granular configuration options.',                  span: 'col-span-1' },
+  { icon: BarChart,   title: 'Resource Scaling',    description: 'Dynamic allocation adapts to demand so you never overpay.',                   span: 'col-span-1' },
+  { icon: Globe,      title: 'Global Network',      description: 'Strategically placed nodes worldwide for optimal connectivity.',              span: 'col-span-1' },
 ];
 
-const Features = () => {
-  return (
-    <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* === Header Section === */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-left mb-12"
-        >
-          <span className="bg-blue-600/20 text-blue-300 text-sm font-semibold px-4 py-1 rounded-full">
-            We Won't Disappoint
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mt-4">
-            Advanced <span className="text-blue-400">Features</span>
-          </h2>
-          <p className="text-lg text-gray-400 mt-2 max-w-3xl">
-            Everything you need for professional game server hosting
-          </p>
-        </motion.div>
+const Features = () => (
+  <section id="features" className="py-24 px-5 sm:px-8 section-divider">
+    <div className="max-w-7xl mx-auto">
 
-        {/* === Grid Kartu Fitur === */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuresData.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              // Terapkan span dari data untuk mengatur ukuran kartu
-              className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 ${feature.span}`}
-            >
-              <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-semibold text-white">{feature.title}</h3>
-                  <feature.icon className="text-blue-400" size={24} />
-              </div>
-              <p className="text-gray-400 mt-2">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mb-14"
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
+          Features
+        </span>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+            Everything you need,<br />nothing you don't.
+          </h2>
+          <p className="text-gray-400 text-sm leading-relaxed max-w-xs md:text-right">
+            Professional-grade infrastructure without the enterprise complexity or price tag.
+          </p>
         </div>
+      </motion.div>
+
+      {/* Bento grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.05] rounded-2xl overflow-hidden border border-white/[0.05]">
+        {featuresData.map((feature, index) => (
+          <motion.div
+            key={feature.title}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.06 }}
+            className={`bg-[#080b12] p-7 group hover:bg-[#0d1220] transition-colors duration-300 ${feature.span}`}
+          >
+            <div className="flex items-center justify-between mb-5">
+              <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/15">
+                <feature.icon size={17} className="text-blue-400" />
+              </div>
+            </div>
+            <h3 className="text-base font-semibold text-white mb-2">{feature.title}</h3>
+            <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
+          </motion.div>
+        ))}
       </div>
-    </section>
-  );
-};
+
+    </div>
+  </section>
+);
 
 export default Features;
