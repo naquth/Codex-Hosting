@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, BookOpen, Plus, ArrowRight } from 'lucide-react';
 import DiscordLogo from '@/icons/DiscordLogo';
 
+// Wrapper so DiscordLogo behaves like a Lucide icon (accepts size prop)
+const DiscordIcon = ({ size = 17 }: { size?: number }) => (
+  <DiscordLogo className={`flex-shrink-0`} style={{ width: size, height: size }} />
+);
+
 const faqData = [
   { question: 'How do I order a service?', answer: 'Choose a plan on our pricing page, click "Order Now", and follow the checkout steps. Your server is deployed instantly after payment.' },
   { question: 'What payment methods are accepted?', answer: 'We accept major credit/debit cards, bank transfers, PayPal, and popular e-wallets for your convenience.' },
@@ -20,7 +25,7 @@ const contactOptions = [
     badge: '< 1h response',
   },
   {
-    icon: DiscordLogo,
+    icon: DiscordIcon,
     title: 'Join Discord',
     description: 'Connect with the community and get real-time help from our staff and users.',
     href: 'https://discord.gg/FnEe7xcYZQ',
