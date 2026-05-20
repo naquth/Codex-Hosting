@@ -3,9 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, BookOpen, Plus, ArrowRight } from 'lucide-react';
 import DiscordLogo from '@/icons/DiscordLogo';
 
-// Wrapper so DiscordLogo behaves like a Lucide icon (accepts size prop)
-const DiscordIcon = ({ size = 17 }: { size?: number }) => (
-  <DiscordLogo className={`flex-shrink-0`} style={{ width: size, height: size }} />
+// Wrapper so DiscordLogo behaves exactly like a Lucide icon
+// — accepts size and className, inherits text-color via currentColor
+const DiscordIcon = ({ size = 17, className }: { size?: number; className?: string }) => (
+  <DiscordLogo
+    className={className ?? 'text-blue-400 flex-shrink-0'}
+    style={{ width: size, height: size }}
+  />
 );
 
 const faqData = [
