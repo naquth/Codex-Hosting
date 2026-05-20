@@ -6,7 +6,7 @@ const faqData = [
   {
     question: 'How do I get started with game server hosting?',
     answer:
-      'Simply choose a plan, complete checkout, and your server is deployed instantly. You'll receive an email with login details to get up and running straight away.',
+      "Simply choose a plan, complete checkout, and your server is deployed instantly. You'll receive an email with login details to get up and running straight away.",
   },
   {
     question: 'What kind of support do you provide?',
