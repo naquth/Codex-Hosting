@@ -15,7 +15,7 @@ const pricingPlans = [
     image: '/discord.jpeg',
     priceUSD: 0.39,
     features: ['ECC Memory', 'Fast Performance', 'Low Latency', 'Advanced security', 'Managed services'],
-    buttonText: 'Get started',
+    buttonText: 'View plans',
     popular: true,
     link: '/discord',
     badge: 'Most Popular',
