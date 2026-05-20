@@ -24,6 +24,17 @@ import TOS from './pages/tos';
 import PrivacyPolicy from './pages/privacy';
 import StatusPage from './pages/status';
 
+// ====================================================
+// Import Client Area Pages
+// ====================================================
+import Login from './pages/client/Login';
+import Register from './pages/client/Register';
+import Dashboard from './pages/client/Dashboard';
+import Services from './pages/client/Services';
+import Billing from './pages/client/Billing';
+import Tickets from './pages/client/Tickets';
+import AccountSettings from './pages/client/AccountSettings';
+
 // Komponen untuk scroll ke atas saat ganti halaman
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -33,6 +44,55 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Check if current path is a client area route (hides public navbar & footer)
+const isClientAreaRoute = (pathname: string) =>
+  pathname.startsWith('/client/');
+
+const AppContent = () => {
+  const { pathname } = useLocation();
+  const isClient = isClientAreaRoute(pathname);
+
+  return (
+    <div className="min-h-screen">
+      {/* Sembunyikan Navbar publik di client area */}
+      {!isClient && <Navbar />}
+      <main>
+        <Routes>
+          {/* ---- Rute Halaman Utama ---- */}
+          <Route path="/" element={<Home />} />
+
+          {/* ---- Rute Halaman Layanan ---- */}
+          <Route path="/discord" element={<DiscordPricing />} />
+          <Route path="/minecraft" element={<MinecraftPricing />} />
+          <Route path="/vps" element={<VpsPricing />} />
+
+          {/* ---- Rute Halaman More ---- */}
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/tos" element={<TOS />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/status" element={<StatusPage />} />
+
+          {/* ====================================================
+              CLIENT AREA ROUTES
+              ==================================================== */}
+          <Route path="/client/login" element={<Login />} />
+          <Route path="/client/register" element={<Register />} />
+          <Route path="/client/dashboard" element={<Dashboard />} />
+          <Route path="/client/services" element={<Services />} />
+          <Route path="/client/billing" element={<Billing />} />
+          <Route path="/client/tickets" element={<Tickets />} />
+          <Route path="/client/settings" element={<AccountSettings />} />
+
+          {/* ---- Rute Not Found ---- */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      {/* Sembunyikan Footer publik di client area */}
+      {!isClient && <Footer />}
+    </div>
+  );
+};
 
 const Home = () => (
   <>
@@ -51,31 +111,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen">
-        <Navbar />
-        <main>
-          <Routes>
-            {/* Rute Halaman Utama */}
-            <Route path="/" element={<Home />} />
-
-            {/* Rute Halaman Layanan */}
-            <Route path="/discord" element={<DiscordPricing />} />
-            <Route path="/minecraft" element={<MinecraftPricing />} />
-            <Route path="/vps" element={<VpsPricing />} />
-
-            {/* Rute Halaman More */}
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/tos" element={<TOS />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/status" element={<StatusPage />} />
-
-            {/* Rute Not Found */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppContent />
     </Router>
   );
 }
