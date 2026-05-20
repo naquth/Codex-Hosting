@@ -1,123 +1,142 @@
 import { motion } from 'framer-motion';
 import { Users, Zap, Shield, Heart } from 'lucide-react';
 
-// Team Data (Placeholder)
 const teamMembers = [
-    { name: 'John Doe', role: 'Founder & CEO', image: 'https://placehold.co/500x500/1E293B/FFFFFF?text=JD' },
-    { name: 'Jane Smith', role: 'Head of Operations', image: 'https://placehold.co/500x500/1E293B/FFFFFF?text=JS' },
-    { name: 'Peter Jones', role: 'Lead Developer', image: 'https://placehold.co/500x500/1E293B/FFFFFF?text=PJ' },
-    { name: 'Sarah Miller', role: 'Support Manager', image: 'https://placehold.co/500x500/1E293B/FFFFFF?text=SM' },
+  { name: 'John Doe',     role: 'Founder & CEO',        initials: 'JD' },
+  { name: 'Jane Smith',   role: 'Head of Operations',   initials: 'JS' },
+  { name: 'Peter Jones',  role: 'Lead Developer',       initials: 'PJ' },
+  { name: 'Sarah Miller', role: 'Support Manager',      initials: 'SM' },
 ];
 
-// Company Values Data
 const coreValues = [
-    { icon: Zap, title: 'Performance', description: 'We are obsessed with speed and low latency to deliver the best experience.' },
-    { icon: Shield, title: 'Security', description: 'Keeping your servers and data secure is our top priority.' },
-    { icon: Heart, title: 'Customer Support', description: 'Our team is always ready to help you 24/7 with a fast and friendly response.' },
-    { icon: Users, title: 'Community', description: 'We build more than just a service; we build a community.' },
+  { icon: Zap,    title: 'Performance',       description: 'We are obsessed with speed and low latency to deliver the best experience.' },
+  { icon: Shield, title: 'Security',          description: 'Keeping your servers and data secure is our top priority.' },
+  { icon: Heart,  title: 'Customer Support',  description: 'Our team is always ready to help you 24/7 with a fast and friendly response.' },
+  { icon: Users,  title: 'Community',         description: 'We build more than just a service — we build a community.' },
 ];
 
-const AboutUs = () => {
-    return (
-        <div className="min-h-screen text-white" style={{ backgroundImage: `url('/background.png')`, backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
-            <div className="container mx-auto px-4 py-20 pt-32">
-                
-                {/* Header */}
-                <motion.div 
-                    initial={{ opacity: 0, y: -30 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 0.7 }} 
-                    className="text-center mb-20"
-                >
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4">About <span className="text-blue-400">CodeX</span></h1>
-                    <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                        Providing high-performance hosting solutions with leading technology for developers, gamers, and businesses worldwide.
-                    </p>
-                </motion.div>
+const avatarColors = ['bg-blue-600', 'bg-violet-600', 'bg-emerald-600', 'bg-orange-500'];
 
-                {/* Our Mission */}
-                <div className="text-center mb-20">
-                    <motion.h2 
-                        initial={{ opacity: 0 }} 
-                        whileInView={{ opacity: 1 }} 
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-3xl md:text-4xl font-bold mb-4"
-                    >
-                        Our Mission
-                    </motion.h2>
-                    <motion.p 
-                        initial={{ opacity: 0, y: 20 }} 
-                        whileInView={{ opacity: 1, y: 0 }} 
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className="text-gray-400 max-w-4xl mx-auto leading-relaxed"
-                    >
-                        Our mission is to empower creativity and innovation by providing reliable, fast, and secure server infrastructure. We believe that everyone deserves access to high-quality hosting without compromising on performance or security. At CodeX, we are committed to being the trusted hosting partner for your every project, from the smallest to enterprise scale.
-                    </motion.p>
-                </div>
+const stats = [
+  { value: '10K+',  label: 'Active Servers'   },
+  { value: '99.9%', label: 'Uptime SLA'        },
+  { value: '24/7',  label: 'Support Available' },
+  { value: '3+',    label: 'Global Locations'  },
+];
 
-                {/* Our Team */}
-                <div className="mb-20">
-                    <motion.h2 
-                        initial={{ opacity: 0 }} 
-                        whileInView={{ opacity: 1 }} 
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="text-3xl md:text-4xl font-bold text-center mb-10"
-                    >
-                        Our <span className="text-blue-400">Team</span>
-                    </motion.h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-                        {teamMembers.map((member, index) => (
-                            <motion.div 
-                                key={member.name}
-                                initial={{ opacity: 0, scale: 0.9 }} 
-                                whileInView={{ opacity: 1, scale: 1 }} 
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="text-center"
-                            >
-                                <img src={member.image} alt={member.name} className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full object-cover border-4 border-gray-700 mb-4" />
-                                <h3 className="font-bold text-lg">{member.name}</h3>
-                                <p className="text-blue-400 text-sm">{member.role}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
+const AboutUs = () => (
+  <div className="min-h-screen">
+    <div className="fixed inset-0 grid-overlay pointer-events-none" />
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
-                {/* Our Values */}
-                <div>
-                    <motion.h2 
-                        initial={{ opacity: 0 }} 
-                        whileInView={{ opacity: 1 }} 
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="text-3xl md:text-4xl font-bold text-center mb-10"
-                    >
-                        Our Core Values
-                    </motion.h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {coreValues.map((value, index) => (
-                            <motion.div 
-                                key={value.title}
-                                initial={{ opacity: 0, y: 30 }} 
-                                whileInView={{ opacity: 1, y: 0 }} 
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.15 }}
-                                className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg text-center border border-gray-700"
-                            >
-                                <value.icon className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-                                <h3 className="font-bold text-xl mb-2">{value.title}</h3>
-                                <p className="text-gray-400 text-sm">{value.description}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
+    <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
-            </div>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mb-20"
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">About</span>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight max-w-xl">
+          The team behind CodeX.
+        </h1>
+        <p className="text-gray-400 text-sm mt-4 max-w-lg leading-relaxed">
+          Providing high-performance hosting solutions with leading technology for developers, gamers, and businesses worldwide.
+        </p>
+      </motion.div>
+
+      {/* Stats row */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+        className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.05] rounded-2xl overflow-hidden border border-white/[0.05] mb-20"
+      >
+        {stats.map((s) => (
+          <div key={s.label} className="bg-[#080b12] py-8 text-center">
+            <p className="text-3xl font-bold text-white">{s.value}</p>
+            <p className="text-xs text-gray-500 mt-1">{s.label}</p>
+          </div>
+        ))}
+      </motion.div>
+
+      {/* Mission */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-20 max-w-3xl"
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Mission</span>
+        <h2 className="text-3xl font-bold text-white tracking-tight mb-5">Why we exist.</h2>
+        <p className="text-gray-400 text-sm leading-relaxed">
+          Our mission is to empower creativity and innovation by providing reliable, fast, and secure server infrastructure.
+          We believe that everyone deserves access to high-quality hosting without compromising on performance or security.
+          At CodeX, we are committed to being the trusted hosting partner for your every project — from the smallest side project to enterprise scale.
+        </p>
+      </motion.div>
+
+      {/* Team */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-20"
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Team</span>
+        <h2 className="text-3xl font-bold text-white tracking-tight mb-10">The people behind the platform.</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+          {teamMembers.map((member, i) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-5 text-center hover:border-blue-500/30 transition-colors"
+            >
+              <div className={`w-14 h-14 rounded-full ${avatarColors[i]} flex items-center justify-center text-white text-lg font-bold mx-auto mb-4`}>
+                {member.initials}
+              </div>
+              <h3 className="text-sm font-semibold text-white">{member.name}</h3>
+              <p className="text-xs text-blue-400 mt-1">{member.role}</p>
+            </motion.div>
+          ))}
         </div>
-    );
-};
+      </motion.div>
+
+      {/* Values */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Values</span>
+        <h2 className="text-3xl font-bold text-white tracking-tight mb-10">What we stand for.</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.05] rounded-2xl overflow-hidden border border-white/[0.05]">
+          {coreValues.map((v, i) => (
+            <motion.div
+              key={v.title}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.07 }}
+              className="bg-[#080b12] p-7 hover:bg-[#0d1220] transition-colors"
+            >
+              <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/15 w-fit mb-4">
+                <v.icon size={17} className="text-blue-400" />
+              </div>
+              <h3 className="text-sm font-semibold text-white mb-2">{v.title}</h3>
+              <p className="text-xs text-gray-500 leading-relaxed">{v.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+    </div>
+  </div>
+);
 
 export default AboutUs;

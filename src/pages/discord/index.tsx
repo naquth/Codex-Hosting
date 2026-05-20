@@ -1,271 +1,199 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Zap, HardDrive, Wifi, ShieldCheck, LifeBuoy, ChevronDown } from 'lucide-react';
-import nodejsImg from "@/assets/nodejs.jpg";
+import { Cpu, Zap, HardDrive, Wifi, ShieldCheck, LifeBuoy, Clock, Check, ChevronDown } from 'lucide-react';
+import nodejsImg from '@/assets/nodejs.jpg';
 
-// Data mata uang dan kurs konversi
 const currencies = {
-  INR: { symbol: '₹', name: 'Indian Rupee', rate: 83.5 },
   USD: { symbol: '$', name: 'US Dollar', rate: 1 },
+  INR: { symbol: '₹', name: 'Indian Rupee', rate: 83.5 },
   EUR: { symbol: '€', name: 'Euro', rate: 0.92 },
 };
 
-// Data paket hosting dengan harga dasar dalam USD untuk konversi
 const discordPlans = [
-  {
-    name: 'Lite Plan',
-    type: 'Discord Bot',
-    priceUSD: 0.42,
-    cpu: '100% CPU',
-    ram: '512 MB',
-    storage: '2 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: false,
-  },
-  {
-    name: 'Plus Plan',
-    type: 'Discord Bot',
-    priceUSD: 0.84,
-    cpu: '100% CPU',
-    ram: '1 GB',
-    storage: '5 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: true,
-  },
-  {
-    name: 'Pro Plan',
-    type: 'Discord Bot',
-    priceUSD: 1.68,
-    cpu: '100% CPU',
-    ram: '2 GB',
-    storage: '15 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: false,
-  },
-  {
-    name: 'Ultra Plan',
-    type: 'Discord Bot',
-    priceUSD: 3.35,
-    cpu: '150% CPU',
-    ram: '4 GB',
-    storage: '20 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: false,
-  },
-  {
-    name: 'Elite Plan',
-    type: 'Discord Bot',
-    priceUSD: 5.02,
-    cpu: '200% CPU',
-    ram: '6 GB',
-    storage: '30 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: false,
-  },
-  {
-    name: 'LavaLink: V4',
-    type: 'Discord Bot',
-    priceUSD: 0.96,
-    cpu: '100% CPU',
-    ram: '2 GB',
-    storage: '5 GB',
-    storageType: 'SSD Storage',
-    bandwidth: 'Unlimited',
-    uptime: '24/7 Uptime',
-    popular: false,
-  },
+  { name: 'Lite Plan',    priceUSD: 0.42, cpu: '100%', ram: '512 MB', storage: '2 GB',  popular: false },
+  { name: 'Plus Plan',    priceUSD: 0.84, cpu: '100%', ram: '1 GB',   storage: '5 GB',  popular: true  },
+  { name: 'Pro Plan',     priceUSD: 1.68, cpu: '100%', ram: '2 GB',   storage: '15 GB', popular: false },
+  { name: 'Ultra Plan',   priceUSD: 3.35, cpu: '150%', ram: '4 GB',   storage: '20 GB', popular: false },
+  { name: 'Elite Plan',   priceUSD: 5.02, cpu: '200%', ram: '6 GB',   storage: '30 GB', popular: false },
+  { name: 'LavaLink: V4', priceUSD: 0.96, cpu: '100%', ram: '2 GB',   storage: '5 GB',  popular: false },
 ];
 
-const AdvancedFeatures = [
-    {
-        icon: <Zap size={28} className="text-blue-400" />,
-        title: 'Instant Activation',
-        description: 'Your service is activated instantly after payment confirmation.'
-    },
-    {
-        icon: <ShieldCheck size={28} className="text-blue-400" />,
-        title: 'DDoS Protection',
-        description: 'Advanced protection to keep your bot online during attacks.'
-    },
-    {
-        icon: <LifeBuoy size={28} className="text-blue-400" />,
-        title: '24/7 Support',
-        description: 'Our expert team is always ready to help you with any issue.'
-    },
+const features = [
+  { icon: Zap,        title: 'Instant Activation',  description: 'Your service is activated instantly after payment confirmation.' },
+  { icon: ShieldCheck,title: 'DDoS Protection',     description: 'Advanced protection to keep your bot online during attacks.' },
+  { icon: LifeBuoy,   title: '24/7 Support',        description: 'Our expert team is always ready to help you with any issue.' },
+  { icon: Clock,      title: '99.9% Uptime',        description: 'Guaranteed availability so your bot never goes offline.' },
 ];
 
 const DiscordBotPricing = () => {
-  const [activeTab, setActiveTab] = useState('premium');
-  const [selectedCurrency, setSelectedCurrency] = useState('INR');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const currentCurrency = currencies[selectedCurrency as keyof typeof currencies];
+  const cc = currencies[selectedCurrency as keyof typeof currencies];
 
   return (
-    // PERUBAHAN: Latar belakang menggunakan background.png dan ada section wrapper
-    <div className="min-h-screen" style={{ backgroundImage: `url('/background.png')`, backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
-      {/* PERUBAHAN: Wrapper section dengan padding atas (pt-32) agar tidak menempel navbar */}
-      <section className="container mx-auto px-4 py-20 pt-32">
-        
-        {/* === Header Section & Currency Selector === */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">Discord Bot <span className="text-blue-400">Hosting</span></h1>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-            Reliable and affordable Discord bot hosting with 24/7 uptime, Node.js support, and easy management. Perfect for developers and communities.
-          </p>
-        </motion.div>
+    <div className="min-h-screen">
+      {/* Subtle grid */}
+      <div className="fixed inset-0 grid-overlay pointer-events-none opacity-100" />
+      {/* Top glow */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-            {/* Plan Type Tabs */}
-            <div className="bg-gray-800/70 backdrop-blur-sm p-2 rounded-lg flex items-center gap-2">
-                <button 
-                    onClick={() => setActiveTab('standard')}
-                    className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'standard' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'}`}
-                >
-                    Plan Type
-                </button>
-                <button 
-                    onClick={() => setActiveTab('premium')}
-                    className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'premium' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'}`}
-                >
-                    Premium Plans
-                </button>
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-14"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+            <div>
+              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
+                Services
+              </span>
+              <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+                Discord Bot Hosting
+              </h1>
+              <p className="text-gray-400 text-sm mt-3 max-w-md leading-relaxed">
+                Reliable, affordable bot hosting with Node.js support, 24/7 uptime, and instant deployment.
+              </p>
             </div>
-            {/* Currency Dropdown */}
-            <div className="relative inline-block text-left">
+            {/* Currency selector */}
+            <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="bg-gray-800/70 backdrop-blur-sm border border-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg inline-flex items-center text-sm"
+                className="flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-white/[0.07] transition-colors"
               >
-                <span className="mr-2">{currentCurrency.symbol} {selectedCurrency}</span>
-                <ChevronDown size={20} />
+                {cc.symbol} {selectedCurrency}
+                <ChevronDown size={14} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               {isDropdownOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-10"
+                  className="absolute right-0 mt-1.5 w-40 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-xl p-1 z-20"
                 >
-                  <div className="py-1">
-                    {Object.entries(currencies).map(([code, { symbol, name }]) => (
-                      <a
-                        key={code}
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setSelectedCurrency(code);
-                          setIsDropdownOpen(false);
-                        }}
-                        className="text-gray-300 block px-4 py-2 text-sm hover:bg-gray-700"
-                      >
-                        {symbol} {code} - {name}
-                      </a>
-                    ))}
-                  </div>
+                  {Object.entries(currencies).map(([code, { symbol }]) => (
+                    <button
+                      key={code}
+                      onClick={() => { setSelectedCurrency(code); setIsDropdownOpen(false); }}
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${
+                        selectedCurrency === code ? 'text-blue-400 bg-blue-500/10' : 'text-gray-300 hover:bg-white/[0.05]'
+                      }`}
+                    >
+                      {symbol} {code}
+                    </button>
+                  ))}
                 </motion.div>
               )}
             </div>
-        </div>
+          </div>
+        </motion.div>
 
-        {/* === Pricing Cards Grid === */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Pricing grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-24">
           {discordPlans.map((plan, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative bg-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden group hover:border-blue-500 transition-all duration-300 flex flex-col ${plan.popular ? 'border-blue-500' : ''}`}
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.07 }}
+              className={`relative rounded-2xl border transition-all duration-300 flex flex-col group ${
+                plan.popular
+                  ? 'border-blue-500/50 bg-blue-600/[0.05]'
+                  : 'border-white/[0.07] bg-white/[0.02] hover:border-white/[0.14]'
+              }`}
             >
               {plan.popular && (
-                <div className="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  Popular
+                <div className="absolute top-4 right-4 text-[11px] font-bold text-blue-300 bg-blue-600/20 border border-blue-500/30 px-2.5 py-1 rounded-full">
+                  Most Popular
                 </div>
               )}
-              <div className="p-6 flex-grow">
-  <div className="flex items-start gap-4 mb-4">
-    <img
-      src={nodejsImg}
-      alt="Node.js Icon"
-      className="w-16 h-16 rounded-lg object-cover"
-      onError={(e) => {
-        e.currentTarget.src = "https://placehold.co/64x64/1F2937/FFFFFF?text=JS";
-      }}
-    />
-    <div>
-      <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-      <p className="text-sm text-gray-400">{plan.type}</p>
-    </div>
-  </div>
-  
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4 my-6 text-sm">
-                    <div className="flex items-center gap-2 text-gray-300"><Cpu size={16} className="text-gray-500"/> <span>{plan.cpu}</span></div>
-                    <div className="flex items-center gap-2 text-gray-300"><Zap size={16} className="text-gray-500"/> <span>{plan.ram} RAM</span></div>
-                    <div className="flex items-center gap-2 text-gray-300"><HardDrive size={16} className="text-gray-500"/> <span>{plan.storage} {plan.storageType}</span></div>
-                    <div className="flex items-center gap-2 text-gray-300"><Wifi size={16} className="text-gray-500"/> <span>{plan.bandwidth}</span></div>
+              <div className="p-5 flex-grow">
+                {/* Icon + name */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-lg overflow-hidden border border-white/[0.07] flex-shrink-0">
+                    <img src={nodejsImg} alt="Node.js" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{plan.name}</h3>
+                    <p className="text-xs text-gray-500">Discord Bot Hosting</p>
+                  </div>
                 </div>
-                
-                <div className='border-t border-gray-700 my-6'></div>
-                
-                <div className="flex items-baseline justify-center text-center">
-                  {/* PERUBAHAN: Harga dinamis sesuai mata uang yang dipilih */}
-                  <span className="text-4xl font-bold tracking-tight text-white">{currentCurrency.symbol}{(plan.priceUSD * currentCurrency.rate).toFixed(2)}</span>
-                  <span className="text-lg text-gray-400">/mo</span>
+
+                {/* Price */}
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-bold text-white">{cc.symbol}{(plan.priceUSD * cc.rate).toFixed(2)}</span>
+                    <span className="text-sm text-gray-500">/mo</span>
+                  </div>
+                </div>
+
+                {/* Specs */}
+                <div className="space-y-2.5">
+                  {[
+                    { icon: Cpu,       label: `${plan.cpu} CPU`          },
+                    { icon: Zap,       label: `${plan.ram} RAM`          },
+                    { icon: HardDrive, label: `${plan.storage} SSD`      },
+                    { icon: Wifi,      label: 'Unlimited Bandwidth'      },
+                    { icon: Clock,     label: '24/7 Uptime'              },
+                  ].map(({ icon: Icon, label }) => (
+                    <div key={label} className="flex items-center gap-2 text-xs text-gray-400">
+                      <Check size={13} className="text-blue-400 flex-shrink-0" />
+                      {label}
+                    </div>
+                  ))}
                 </div>
               </div>
-              
-              <div className="p-6 pt-0 mt-auto">
-                <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 group-hover:shadow-lg group-hover:shadow-blue-600/30">
+
+              <div className="p-5 pt-0">
+                <button className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                  plan.popular
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                    : 'bg-white/[0.06] hover:bg-white/[0.10] text-white border border-white/[0.08]'
+                }`}>
                   Order Now
                 </button>
               </div>
             </motion.div>
           ))}
         </div>
-        
-        {/* === Advanced Features Section === */}
-        <div className="mt-24">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-white">Advanced <span className="text-blue-400">Features</span></h2>
-                <p className="text-gray-400 mt-2 max-w-2xl mx-auto">Everything you need for professional bot hosting.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {AdvancedFeatures.map((feature, index) => (
-                     <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: index * 0.15 }}
-                        className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center"
-                    >
-                        <div className="flex justify-center mb-4">
-                            {feature.icon}
-                        </div>
-                        <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
-                        <p className="text-gray-400 text-sm">{feature.description}</p>
-                    </motion.div>
-                ))}
-            </div>
-        </div>
-      </section>
+
+        {/* Features */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="mb-10">
+            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">
+              Why choose us
+            </span>
+            <h2 className="text-3xl font-bold text-white tracking-tight">Built for bots.</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.05] rounded-2xl overflow-hidden border border-white/[0.05]">
+            {features.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className="bg-[#080b12] p-6 hover:bg-[#0d1220] transition-colors"
+              >
+                <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/15 w-fit mb-4">
+                  <f.icon size={16} className="text-blue-400" />
+                </div>
+                <h3 className="text-sm font-semibold text-white mb-1.5">{f.title}</h3>
+                <p className="text-xs text-gray-500 leading-relaxed">{f.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+      </div>
     </div>
   );
 };

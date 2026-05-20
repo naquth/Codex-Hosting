@@ -18,6 +18,7 @@ import NotFound from './components/NotFound';
 import DiscordPricing from './pages/discord';
 import MinecraftPricing from './pages/minecraft';
 import VpsPricing from './pages/vps';
+import LavaLinkPricing from './pages/lavalink';
 import AboutUs from './pages/aboutus';
 import Support from './pages/support';
 import TOS from './pages/tos';
@@ -65,6 +66,7 @@ const AppContent = () => {
           <Route path="/discord" element={<DiscordPricing />} />
           <Route path="/minecraft" element={<MinecraftPricing />} />
           <Route path="/vps" element={<VpsPricing />} />
+          <Route path="/lavalink" element={<LavaLinkPricing />} />
 
           {/* ---- Rute Halaman More ---- */}
           <Route path="/about" element={<AboutUs />} />

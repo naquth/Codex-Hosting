@@ -1,144 +1,173 @@
 import { motion } from 'framer-motion';
-import { BarChartHorizontal, CheckCircle2, AlertTriangle, XCircle, Wrench } from 'lucide-react';
-import { useState } from 'react';
+import { CheckCircle2, AlertTriangle, XCircle, Wrench, Clock } from 'lucide-react';
 
-// Type for service status
 type Status = 'Operational' | 'Degraded Performance' | 'Partial Outage' | 'Major Outage' | 'Under Maintenance';
 
-// Service status data (Placeholder)
 const servicesStatus: { name: string; description: string; status: Status }[] = [
-    { name: 'Website & Client Portal', description: 'Access to the main website and client panel.', status: 'Operational' },
-    { name: 'Game Control Panel', description: 'Management panel for game servers.', status: 'Operational' },
-    { name: 'Service API', description: 'API endpoints for automation and services.', status: 'Degraded Performance' },
-    { name: 'Server Node - USA', description: 'Server infrastructure in the United States location.', status: 'Operational' },
-    { name: 'Server Node - Netherlands', description: 'Server infrastructure in the Netherlands location.', status: 'Under Maintenance' },
-    { name: 'Database & Storage', description: 'Main database systems and data storage.', status: 'Operational' },
-    { name: 'Support Services', description: 'Ticketing system and live chat.', status: 'Partial Outage' },
+  { name: 'Website & Client Portal', description: 'Main website and client panel access.', status: 'Operational' },
+  { name: 'Game Control Panel',      description: 'Management panel for game servers.',    status: 'Operational' },
+  { name: 'Service API',             description: 'API endpoints for automation.',         status: 'Degraded Performance' },
+  { name: 'Server Node — USA',       description: 'Infrastructure in the United States.',  status: 'Operational' },
+  { name: 'Server Node — Netherlands', description: 'Infrastructure in the Netherlands.', status: 'Under Maintenance' },
+  { name: 'Database & Storage',      description: 'Main database and storage systems.',    status: 'Operational' },
+  { name: 'Support Services',        description: 'Ticketing system and live chat.',       status: 'Partial Outage' },
 ];
 
-// Incident history data (Placeholder)
 const incidentHistory = [
-    { 
-        date: 'September 28, 2025',
-        title: 'API Performance Issues',
-        status: 'Investigating',
-        updates: [
-            { time: '10:45 (UTC+7)', message: 'We are currently investigating reports of high latency on some API endpoints. We will provide an update as soon as possible.' },
-            { time: '10:30 (UTC+7)', message: 'The issue was first detected by our monitoring system.' }
-        ]
-    },
-    {
-        date: 'September 27, 2025',
-        title: 'Emergency Maintenance on Netherlands Node',
-        status: 'Resolved',
-        updates: [
-            { time: '05:00 (UTC+7)', message: 'Maintenance has been completed, and all services on the Netherlands node have been fully restored. We will continue to monitor the situation.' },
-            { time: '02:00 (UTC+7)', message: 'We performed emergency maintenance on one of the hosts in the Netherlands node to replace a hardware component.' },
-        ]
-    },
+  {
+    date: 'September 28, 2025',
+    title: 'API Performance Issues',
+    status: 'Investigating',
+    updates: [
+      { time: '10:45 UTC+7', message: 'We are investigating reports of high latency on some API endpoints and will update shortly.' },
+      { time: '10:30 UTC+7', message: 'Issue first detected by our monitoring system.' },
+    ],
+  },
+  {
+    date: 'September 27, 2025',
+    title: 'Emergency Maintenance — Netherlands Node',
+    status: 'Resolved',
+    updates: [
+      { time: '05:00 UTC+7', message: 'Maintenance completed. All services on the Netherlands node have been fully restored.' },
+      { time: '02:00 UTC+7', message: 'Emergency maintenance begun to replace a hardware component on one host.' },
+    ],
+  },
 ];
 
-// Helper for status styling
-const getStatusProps = (status: Status) => {
-    switch (status) {
-        case 'Operational':
-            return { color: 'text-green-400', Icon: CheckCircle2, label: 'Operational' };
-        case 'Degraded Performance':
-            return { color: 'text-yellow-400', Icon: AlertTriangle, label: 'Degraded Performance' };
-        case 'Partial Outage':
-            return { color: 'text-orange-400', Icon: AlertTriangle, label: 'Partial Outage' };
-        case 'Major Outage':
-            return { color: 'text-red-500', Icon: XCircle, label: 'Major Outage' };
-        case 'Under Maintenance':
-            return { color: 'text-blue-400', Icon: Wrench, label: 'Under Maintenance' };
-        default:
-            return { color: 'text-gray-400', Icon: CheckCircle2, label: 'Unknown' };
-    }
+const statusConfig: Record<Status, { color: string; bg: string; border: string; dot: string; icon: typeof CheckCircle2 }> = {
+  'Operational':          { color: 'text-green-400',  bg: 'bg-green-400/10',  border: 'border-green-400/20',  dot: 'bg-green-400',  icon: CheckCircle2 },
+  'Degraded Performance': { color: 'text-yellow-400', bg: 'bg-yellow-400/10', border: 'border-yellow-400/20', dot: 'bg-yellow-400', icon: AlertTriangle },
+  'Partial Outage':       { color: 'text-orange-400', bg: 'bg-orange-400/10', border: 'border-orange-400/20', dot: 'bg-orange-400', icon: AlertTriangle },
+  'Major Outage':         { color: 'text-red-400',    bg: 'bg-red-400/10',    border: 'border-red-400/20',    dot: 'bg-red-400',    icon: XCircle },
+  'Under Maintenance':    { color: 'text-blue-400',   bg: 'bg-blue-400/10',   border: 'border-blue-400/20',   dot: 'bg-blue-400',   icon: Wrench },
 };
 
 const StatusPage = () => {
-    const overallStatus = servicesStatus.some(s => s.status !== 'Operational') ? 'Some systems are experiencing issues' : 'All Systems Operational';
+  const allOperational = servicesStatus.every(s => s.status === 'Operational');
+  const operationalCount = servicesStatus.filter(s => s.status === 'Operational').length;
 
-    return (
-        <div className="min-h-screen text-white" style={{ backgroundImage: `url('/background.png')`, backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
-            <div className="container mx-auto px-4 py-20 pt-32">
+  return (
+    <div className="min-h-screen">
+      <div className="fixed inset-0 grid-overlay pointer-events-none" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
-                {/* Header */}
-                <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="text-center mb-12">
-                    <BarChartHorizontal className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                    <h1 className="text-4xl md:text-5xl font-bold">Service Status</h1>
-                    <p className="text-gray-300 mt-2">Real-time updates on the availability of our services.</p>
-                </motion.div>
+      <div className="relative max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
-                {/* Overall Status */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-                    className={`max-w-4xl mx-auto p-4 rounded-lg mb-12 border ${overallStatus.includes('All') ? 'bg-green-500/10 border-green-400' : 'bg-yellow-500/10 border-yellow-400'}`}
-                >
-                    <p className={`font-bold text-center ${overallStatus.includes('All') ? 'text-green-300' : 'text-yellow-300'}`}>{overallStatus}</p>
-                </motion.div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-10"
+        >
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Status</span>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Service Status</h1>
+          <p className="text-gray-400 text-sm mt-3">Real-time availability of all CodeX services.</p>
+        </motion.div>
 
-                {/* Service Status List */}
-                <motion.div
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-                    className="max-w-4xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 divide-y divide-gray-700"
-                >
-                    {servicesStatus.map((service, index) => {
-                        const { color, Icon, label } = getStatusProps(service.status);
-                        return (
-                            <div key={index} className="p-4 flex flex-col md:flex-row justify-between items-center">
-                                <div>
-                                    <h2 className="font-bold text-lg">{service.name}</h2>
-                                    <p className="text-sm text-gray-400">{service.description}</p>
-                                </div>
-                                <div className={`flex items-center gap-2 font-semibold ${color} mt-2 md:mt-0`}>
-                                    <Icon className="w-5 h-5" />
-                                    <span>{label}</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </motion.div>
+        {/* Overall banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className={`flex items-center gap-3 p-4 rounded-xl border mb-10 ${
+            allOperational
+              ? 'bg-green-400/[0.05] border-green-400/20'
+              : 'bg-yellow-400/[0.05] border-yellow-400/20'
+          }`}
+        >
+          <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${allOperational ? 'bg-green-400' : 'bg-yellow-400'} animate-pulse`} />
+          <div className="flex-1">
+            <p className={`text-sm font-semibold ${allOperational ? 'text-green-400' : 'text-yellow-400'}`}>
+              {allOperational ? 'All Systems Operational' : 'Some systems are experiencing issues'}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {operationalCount}/{servicesStatus.length} services operational · Last updated just now
+            </p>
+          </div>
+          <Clock size={14} className="text-gray-600 flex-shrink-0" />
+        </motion.div>
 
-                {/* Incident History */}
-                <div className="max-w-4xl mx-auto mt-20">
-                    <h2 className="text-3xl font-bold text-center mb-10">Incident History</h2>
-                    <div className="space-y-8">
-                        {incidentHistory.map((incident, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.1 * index }}
-                                className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700"
-                            >
-                                <div className="flex justify-between items-start mb-4">
-                                    <div>
-                                        <h3 className="font-bold text-xl text-blue-300">{incident.title}</h3>
-                                        <p className="text-sm text-gray-400">{incident.date}</p>
-                                    </div>
-                                    <span className={`text-xs font-bold px-2 py-1 rounded-full ${incident.status === 'Resolved' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`}>
-                                        {incident.status}
-                                    </span>
-                                </div>
-                                <div className="border-l-2 border-gray-600 pl-4 space-y-3">
-                                    {incident.updates.map((update, idx) => (
-                                        <div key={idx} className="relative">
-                                            <div className="absolute -left-[27px] top-1 w-3 h-3 bg-gray-500 rounded-full border-2 border-gray-800"></div>
-                                            <p className="text-sm text-gray-400">{update.time}</p>
-                                            <p className="text-gray-200">{update.message}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+        {/* Services list */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white/[0.02] border border-white/[0.07] rounded-2xl overflow-hidden mb-16"
+        >
+          {servicesStatus.map((svc, i) => {
+            const cfg = statusConfig[svc.status];
+            return (
+              <motion.div
+                key={svc.name}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 + i * 0.05 }}
+                className={`flex items-center justify-between px-5 py-4 ${
+                  i < servicesStatus.length - 1 ? 'border-b border-white/[0.05]' : ''
+                } hover:bg-white/[0.02] transition-colors`}
+              >
+                <div>
+                  <p className="text-sm font-medium text-white">{svc.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{svc.description}</p>
                 </div>
+                <span className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border flex-shrink-0 ml-4 ${cfg.color} ${cfg.bg} ${cfg.border}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+                  {svc.status}
+                </span>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-            </div>
-        </div>
-    );
+        {/* Incident history */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">History</span>
+          <h2 className="text-2xl font-bold text-white tracking-tight mb-8">Incident history.</h2>
+          <div className="space-y-5">
+            {incidentHistory.map((inc, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-6"
+              >
+                <div className="flex items-start justify-between mb-5">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{inc.title}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{inc.date}</p>
+                  </div>
+                  <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border flex-shrink-0 ml-3 ${
+                    inc.status === 'Resolved'
+                      ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                      : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+                  }`}>
+                    {inc.status}
+                  </span>
+                </div>
+                <div className="space-y-4 border-l border-white/[0.07] pl-4 ml-1">
+                  {inc.updates.map((upd, j) => (
+                    <div key={j} className="relative">
+                      <div className="absolute -left-[21px] top-1.5 w-2 h-2 rounded-full bg-white/20 border border-white/10" />
+                      <p className="text-[11px] text-gray-600 font-medium mb-1">{upd.time}</p>
+                      <p className="text-xs text-gray-300 leading-relaxed">{upd.message}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+      </div>
+    </div>
+  );
 };
 
 export default StatusPage;

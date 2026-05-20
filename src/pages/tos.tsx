@@ -1,79 +1,101 @@
 import { motion } from 'framer-motion';
 import { FileText } from 'lucide-react';
 
-// Component for styling legal content
-const LegalContent = ({ children }: { children: React.ReactNode }) => (
-    <div className="prose prose-invert prose-lg max-w-none 
-                    prose-h2:text-blue-400 prose-h2:font-bold prose-h2:mb-2 prose-h2:mt-8
-                    prose-p:text-gray-300 prose-p:leading-relaxed
-                    prose-ul:list-disc prose-ul:ml-6 prose-ul:text-gray-300
-                    prose-a:text-blue-400 hover:prose-a:text-blue-300">
-        {children}
-    </div>
-);
+const sections = [
+  {
+    title: '1. Your Account',
+    content: 'To use our Services, you must register for an account. You are responsible for safeguarding the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.',
+  },
+  {
+    title: '2. Acceptable Use Policy',
+    content: 'You agree not to use the Service for any illegal or unauthorized purpose. Prohibited activities include: running malicious software including malware or phishing scripts; engaging in Denial of Service (DoS) or DDoS attacks; storing or distributing illegal content including copyrighted material without rights; sending unsolicited communications (spam); or any activity that violates applicable local, national, or international law.',
+  },
+  {
+    title: '3. Payment & Billing',
+    content: 'All services are billed in advance on a monthly basis. Payments are non-refundable except as expressly stated in our Refund Policy. Failure to pay within the due date may result in service suspension. We reserve the right to modify our pricing with 30 days prior notice to existing customers.',
+  },
+  {
+    title: '4. Service Availability',
+    content: 'We aim for 99.9% uptime but do not guarantee uninterrupted access to services. Scheduled and emergency maintenance may cause temporary downtime. We are not liable for any losses resulting from service interruption outside our reasonable control, including force majeure events.',
+  },
+  {
+    title: '5. Termination',
+    content: 'We reserve the right to suspend or terminate your account at our sole discretion if you violate these Terms, fail to make payment, or engage in activity that may harm other customers or our infrastructure. Upon termination, you will lose access to all associated data. You may cancel your account at any time through the client panel.',
+  },
+  {
+    title: '6. Limitation of Liability',
+    content: 'To the fullest extent permitted by law, CodeX shall not be liable for any indirect, incidental, special, consequential, or punitive damages. Our total liability for any claim arising out of these Terms shall not exceed the amount paid by you for the Services in the three months preceding the event giving rise to the claim.',
+  },
+  {
+    title: '7. Changes to Terms',
+    content: 'We reserve the right to update these Terms at any time. We will notify you of material changes via email or a prominent notice on our website. Your continued use of the Services after such notice constitutes acceptance of the updated Terms.',
+  },
+];
 
-const TOS = () => {
-    return (
-        <div className="min-h-screen text-white" style={{ backgroundImage: `url('/background.png')`, backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
-            <div className="container mx-auto px-4 py-20 pt-32">
-                
-                {/* Header */}
-                <motion.div 
-                    initial={{ opacity: 0, y: -30 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 0.7 }} 
-                    className="text-center mb-12"
-                >
-                    <FileText className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                    <h1 className="text-4xl md:text-5xl font-bold">Terms of Service</h1>
-                    <p className="text-gray-400 mt-2">Last Updated: September 29, 2025</p>
-                </motion.div>
+const TOS = () => (
+  <div className="min-h-screen">
+    <div className="fixed inset-0 grid-overlay pointer-events-none" />
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
-                {/* Content */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="max-w-4xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 md:p-10 border border-gray-700"
-                >
-                    <LegalContent>
-                        <p>Welcome to CodeX! These Terms of Service ("Terms") govern your use of our hosting services ("Services"). By accessing or using our Services, you agree to be bound by these Terms and our Privacy Policy.</p>
-                        
-                        <h2>1. Your Account</h2>
-                        <p>To use our Services, you must register for an account. You are responsible for safeguarding the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</p>
-                        
-                        <h2>2. Acceptable Use Policy</h2>
-                        <p>You agree not to use the Service for any illegal or unauthorized purpose. You agree to comply with all laws, rules, and regulations applicable to your use of the Services. Prohibited activities include, but are not limited to:</p>
-                        <ul>
-                            <li>Running malicious software, including malware, phishing scripts, or bots.</li>
-                            <li>Engaging in Denial of Service (DoS) or Distributed Denial of Service (DDoS) attacks or any other malicious network activities.</li>
-                            <li>Storing or distributing illegal content, including but not limited to copyrighted material for which you do not hold the rights.</li>
-                            <li>Excessive use of server resources (CPU, memory, network) that may interfere with the performance and integrity of our systems or negatively impact other users.</li>
-                            <li>Sending unsolicited bulk email (spam).</li>
-                        </ul>
+    <div className="relative max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
-                        <h2>3. Payments, Renewals, and Refunds</h2>
-                        <p>All services are billed in advance on a recurring basis. It is your responsibility to ensure your payment information is up to date. We offer a 7-day money-back guarantee for new customers on select hosting services. This guarantee is void if you violate any of these Terms. Domain name registrations are non-refundable.</p>
-
-                        <h2>4. Service Availability and Backups</h2>
-                        <p>We strive to maintain a 99.9% uptime for our network and servers. However, we cannot guarantee that the service will be uninterrupted or error-free. You are responsible for maintaining your own backups of your content. While we may perform routine backups, we are not liable for any data loss.</p>
-                        
-                        <h2>5. Termination</h2>
-                        <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Upon termination, your right to use the Service will cease immediately. If you wish to terminate your account, you may do so by submitting a cancellation request through our client portal.</p>
-
-                        <h2>6. Limitation of Liability</h2>
-                        <p>Our Service is provided "as is" and "as available". In no event shall CodeX, nor its directors, employees, or partners, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to use the Service.</p>
-
-                        <h2>7. Changes to Terms</h2>
-                        <p>We reserve the right, at our sole discretion, to modify or replace these terms at any time. We will provide at least 30 days' notice prior to any new terms taking effect. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.</p>
-                        
-                        <h2>8. Governing Law</h2>
-                        <p>These Terms shall be governed and construed in accordance with the laws of our jurisdiction, without regard to its conflict of law provisions.</p>
-                    </LegalContent>
-                </motion.div>
-            </div>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mb-14"
+      >
+        <div className="flex items-center gap-3 mb-5">
+          <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/15">
+            <FileText size={20} className="text-blue-400" />
+          </div>
+          <span className="text-xs font-semibold uppercase tracking-widest text-blue-400">Legal</span>
         </div>
-    );
-};
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Terms of Service</h1>
+        <p className="text-gray-500 text-sm mt-3">Last updated: September 29, 2025</p>
+        <p className="text-gray-400 text-sm mt-4 max-w-lg leading-relaxed">
+          By accessing or using our services, you agree to be bound by these Terms and our Privacy Policy. Please read them carefully.
+        </p>
+      </motion.div>
+
+      {/* Sections */}
+      <div className="space-y-3">
+        {sections.map((sec, i) => (
+          <motion.div
+            key={sec.title}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.06 }}
+            className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-6 hover:border-white/[0.12] transition-colors"
+          >
+            <h2 className="text-sm font-semibold text-white mb-3">{sec.title}</h2>
+            <p className="text-sm text-gray-400 leading-relaxed">{sec.content}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Footer note */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mt-10 p-5 bg-blue-500/[0.05] border border-blue-500/20 rounded-xl"
+      >
+        <p className="text-xs text-gray-400 leading-relaxed">
+          Questions about these Terms? Contact our support team at{' '}
+          <a href="mailto:legal@codex.host" className="text-blue-400 hover:text-blue-300 transition-colors">
+            legal@codex.host
+          </a>{' '}
+          or open a ticket in the{' '}
+          <a href="/client/tickets" className="text-blue-400 hover:text-blue-300 transition-colors">
+            client area
+          </a>.
+        </p>
+      </motion.div>
+
+    </div>
+  </div>
+);
 
 export default TOS;

@@ -11,7 +11,7 @@ const serviceItems = [
   { icon: Bot, name: 'Discord Bot', href: '/discord' },
   { icon: Server, name: 'Minecraft Server', href: '/minecraft' },
   { icon: Globe, name: 'VPS', href: '/vps' },
-  { icon: Music, name: 'Lavalink Hosting', href: '#' },
+  { icon: Music, name: 'Lavalink Hosting', href: '/lavalink' },
 ];
 
 const moreItems = [
