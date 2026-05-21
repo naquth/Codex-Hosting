@@ -4,7 +4,6 @@ import { Home, ArrowRight } from 'lucide-react';
 
 const NotFound = () => (
   <div className="min-h-screen flex items-center justify-center px-5">
-    <div className="fixed inset-0 grid-overlay pointer-events-none" />
     <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
     <motion.div

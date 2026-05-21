@@ -41,12 +41,4 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-
-  /* Subtle grid overlay */
-  .grid-overlay {
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 80px 80px;
-  }
 }

@@ -29,7 +29,6 @@ const LavaLinkPricing = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="fixed inset-0 grid-overlay pointer-events-none" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-24">

@@ -32,7 +32,6 @@ const DiscordBotPricing = () => {
   return (
     <div className="min-h-screen">
       {/* Subtle grid */}
-      <div className="fixed inset-0 grid-overlay pointer-events-none opacity-100" />
       {/* Top glow */}
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
 

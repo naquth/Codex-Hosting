@@ -37,8 +37,6 @@ const Hero = () => {
   return (
     <section className="relative pt-32 pb-20 px-5 sm:px-8 overflow-hidden">
       {/* Subtle grid */}
-      <div className="absolute inset-0 grid-overlay opacity-100 pointer-events-none" />
-
       {/* Radial glow – top center */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
