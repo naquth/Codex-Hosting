@@ -4,14 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, ChevronDown, Bot, Server, Globe,
   Info, HelpingHand, FileText, Shield, BarChart,
-  Music, LayoutDashboard, UserPlus,
+  LayoutDashboard, UserPlus,
 } from 'lucide-react';
 
 const serviceItems = [
   { icon: Bot, name: 'Discord Bot', href: '/discord' },
   { icon: Server, name: 'Minecraft Server', href: '/minecraft' },
   { icon: Globe, name: 'VPS', href: '/vps' },
-  { icon: Music, name: 'Lavalink Hosting', href: '/lavalink' },
 ];
 
 const moreItems = [
