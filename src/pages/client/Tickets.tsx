@@ -20,7 +20,9 @@ const statusStyle: Record<string, { badge: string; icon: typeof CheckCircle }> =
 };
 
 const priorityStyle: Record<string, string> = {
-  high: 'text-red-400', medium: 'text-yellow-400', low: 'text-green-400',
+  high:   'text-red-400',
+  medium: 'text-yellow-400',
+  low:    'text-green-400',
 };
 
 const Tickets = () => {
@@ -35,163 +37,192 @@ const Tickets = () => {
 
   return (
     <ClientLayout>
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="max-w-5xl mx-auto space-y-8">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Support Tickets</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Support Tickets</h1>
             <p className="text-gray-400 mt-1">Get help from our 24/7 support team.</p>
           </div>
           <button
             onClick={() => setShowNewTicket(true)}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors text-sm"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
           >
             <Plus size={16} /> New Ticket
           </button>
         </motion.div>
 
-        <div className="grid grid-cols-3 gap-4">
+        {/* Stats row */}
+        <div className="grid grid-cols-3 gap-5">
           {[
             { label: 'Open',     value: tickets.filter(t => t.status === 'open').length,     color: 'text-blue-400'  },
             { label: 'Answered', value: tickets.filter(t => t.status === 'answered').length, color: 'text-green-400' },
             { label: 'Closed',   value: tickets.filter(t => t.status === 'closed').length,   color: 'text-gray-400'  },
           ].map((s, i) => (
-            <motion.div key={s.label}
+            <motion.div
+              key={s.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.07 }}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-4 text-center"
+              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 text-center"
             >
-              <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-              <p className="text-xs text-gray-400 mt-1">{s.label}</p>
+              <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
+              <p className="text-sm text-gray-400 mt-1.5">{s.label}</p>
             </motion.div>
           ))}
         </div>
 
+        {/* Tickets list */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6"
+          className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7"
         >
           <div className="space-y-3">
             {tickets.map((ticket, index) => {
               const S = statusStyle[ticket.status];
               return (
-                <motion.div key={ticket.id}
+                <motion.div
+                  key={ticket.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.06 }}
-                  className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:border-blue-500/30 transition-all cursor-pointer group"
+                  className="flex items-center justify-between p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-all cursor-pointer group"
                 >
-                  <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className="p-2 bg-blue-500/10 rounded-lg flex-shrink-0">
-                      <TicketIcon size={16} className="text-blue-400" />
+                  <div className="flex items-start gap-4 flex-1 min-w-0">
+                    <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/15 flex-shrink-0">
+                      <TicketIcon size={18} className="text-blue-400" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-medium text-gray-400">{ticket.id}</span>
-                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full flex items-center gap-1 ${S.badge}`}>
+                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 ${S.badge}`}>
                           <S.icon size={11} />
                           {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
                         </span>
-                        <span className={`text-xs font-medium ${priorityStyle[ticket.priority]}`}>
+                        <span className={`text-xs font-semibold ${priorityStyle[ticket.priority]}`}>
                           {ticket.priority.toUpperCase()}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-white mt-0.5 truncate">{ticket.subject}</p>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-xs text-gray-600 flex items-center gap-1"><Clock size={11} /> {ticket.lastReply}</span>
-                        <span className="text-xs text-gray-600 flex items-center gap-1"><MessageCircle size={11} /> {ticket.replies} replies</span>
+                      <p className="text-sm font-semibold text-white mt-1 truncate">{ticket.subject}</p>
+                      <div className="flex items-center gap-4 mt-1.5">
+                        <span className="text-xs text-gray-600 flex items-center gap-1.5">
+                          <Clock size={12} /> {ticket.lastReply}
+                        </span>
+                        <span className="text-xs text-gray-600 flex items-center gap-1.5">
+                          <MessageCircle size={12} /> {ticket.replies} replies
+                        </span>
                       </div>
                     </div>
                   </div>
-                  <ChevronRight size={16} className="text-gray-600 group-hover:text-blue-400 transition-colors flex-shrink-0" />
+                  <ChevronRight size={18} className="text-gray-600 group-hover:text-blue-400 transition-colors flex-shrink-0 ml-4" />
                 </motion.div>
               );
             })}
           </div>
         </motion.div>
+
       </div>
 
       {/* New Ticket Modal */}
-      {showNewTicket && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setShowNewTicket(false)}
-        >
+      <AnimatePresence>
+        {showNewTicket && (
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="w-full max-w-lg bg-gray-900 border border-gray-700 rounded-2xl p-6"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowNewTicket(false)}
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Open New Ticket</h2>
-              <button onClick={() => setShowNewTicket(false)} className="text-gray-400 hover:text-white transition-colors">
-                <X size={20} />
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Subject</label>
-                <input type="text" value={newTicket.subject}
-                  onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
-                  placeholder="Describe your issue briefly"
-                  className="w-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 rounded-lg py-2.5 px-4 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                  required />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Department</label>
-                  <select value={newTicket.department}
-                    onChange={(e) => setNewTicket({ ...newTicket, department: e.target.value })}
-                    className="w-full bg-gray-800 border border-gray-700 text-white rounded-lg py-2.5 px-4 text-sm focus:outline-none focus:border-blue-500 transition-colors">
-                    <option>Technical Support</option>
-                    <option>Billing</option>
-                    <option>Sales</option>
-                    <option>Abuse</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Priority</label>
-                  <select value={newTicket.priority}
-                    onChange={(e) => setNewTicket({ ...newTicket, priority: e.target.value })}
-                    className="w-full bg-gray-800 border border-gray-700 text-white rounded-lg py-2.5 px-4 text-sm focus:outline-none focus:border-blue-500 transition-colors">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                <textarea value={newTicket.message}
-                  onChange={(e) => setNewTicket({ ...newTicket, message: e.target.value })}
-                  placeholder="Describe your issue in detail..."
-                  rows={5}
-                  className="w-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 rounded-lg py-2.5 px-4 text-sm focus:outline-none focus:border-blue-500 transition-colors resize-none"
-                  required />
-              </div>
-              <div className="flex gap-3 pt-2">
-                <button type="button" onClick={() => setShowNewTicket(false)}
-                  className="flex-1 py-2.5 border border-gray-700 text-gray-300 hover:text-white rounded-lg text-sm transition-colors">
-                  Cancel
-                </button>
-                <button type="submit"
-                  className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm flex items-center justify-center gap-2 transition-colors">
-                  <Send size={15} /> Submit Ticket
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full max-w-lg bg-[#0e1420] border border-white/[0.09] rounded-2xl p-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-7">
+                <h2 className="text-xl font-bold text-white tracking-tight">Open New Ticket</h2>
+                <button onClick={() => setShowNewTicket(false)} className="text-gray-400 hover:text-white transition-colors p-1">
+                  <X size={20} />
                 </button>
               </div>
-            </form>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                  <input
+                    type="text"
+                    value={newTicket.subject}
+                    onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
+                    placeholder="Describe your issue briefly"
+                    className="w-full bg-white/[0.04] border border-white/[0.09] text-white placeholder-gray-600 rounded-xl py-3.5 px-4 text-sm focus:outline-none focus:border-blue-500/50 transition-colors"
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Department</label>
+                    <select
+                      value={newTicket.department}
+                      onChange={(e) => setNewTicket({ ...newTicket, department: e.target.value })}
+                      className="w-full bg-white/[0.04] border border-white/[0.09] text-white rounded-xl py-3.5 px-4 text-sm focus:outline-none focus:border-blue-500/50 transition-colors"
+                    >
+                      <option>Technical Support</option>
+                      <option>Billing</option>
+                      <option>Sales</option>
+                      <option>Abuse</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Priority</label>
+                    <select
+                      value={newTicket.priority}
+                      onChange={(e) => setNewTicket({ ...newTicket, priority: e.target.value })}
+                      className="w-full bg-white/[0.04] border border-white/[0.09] text-white rounded-xl py-3.5 px-4 text-sm focus:outline-none focus:border-blue-500/50 transition-colors"
+                    >
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                  <textarea
+                    value={newTicket.message}
+                    onChange={(e) => setNewTicket({ ...newTicket, message: e.target.value })}
+                    placeholder="Describe your issue in detail..."
+                    rows={5}
+                    className="w-full bg-white/[0.04] border border-white/[0.09] text-white placeholder-gray-600 rounded-xl py-3.5 px-4 text-sm focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
+                    required
+                  />
+                </div>
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowNewTicket(false)}
+                    className="flex-1 py-3.5 border border-white/[0.09] text-gray-300 hover:text-white rounded-xl text-sm font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <Send size={16} /> Submit Ticket
+                  </button>
+                </div>
+              </form>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </ClientLayout>
   );
 };
