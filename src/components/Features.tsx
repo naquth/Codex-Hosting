@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Cpu, Zap, ShieldCheck, HeartPulse, Settings, BarChart, Globe } from 'lucide-react';
+import { Cpu, Zap, ShieldCheck, HeartPulse, Settings, BarChart, Globe, Clock, Headset } from 'lucide-react';
 
 const featuresData = [
   { icon: Cpu,        title: 'High Performance',   description: 'Latest-gen processors deliver consistent speed under any workload.'                                                  },
@@ -9,6 +9,8 @@ const featuresData = [
   { icon: Settings,   title: 'Full Control',        description: 'Powerful control panel with granular configuration options.'                                                        },
   { icon: BarChart,   title: 'Resource Scaling',    description: 'Dynamic allocation adapts to demand so you never overpay.'                                                          },
   { icon: Globe,      title: 'Global Network',      description: 'Strategically placed nodes worldwide for optimal connectivity.'                                                     },
+  { icon: Clock,      title: 'Instant Deployment',  description: 'Your server goes live in under 60 seconds after purchase.'                                                         },
+  { icon: Headset,    title: '24/7 Support',        description: 'Expert support team ready to help you any time of day or night.'                                                   },
 ];
 
 const Features = () => (
