@@ -204,6 +204,5 @@ const ClientLayout = ({
     </div>
   );
 };
-};
 
 export default ClientLayout;
