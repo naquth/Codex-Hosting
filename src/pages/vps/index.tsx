@@ -98,7 +98,7 @@ const VpsPricing = () => {
               <motion.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="absolute right-0 mt-1.5 w-28 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-xl p-1 z-20"
+                className="absolute left-0 mt-1.5 w-40 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-xl p-1 z-20"
               >
                 {Object.entries(currencies).map(([code, { symbol }]) => (
                   <button key={code} onClick={() => { setSelectedCurrency(code); setIsDropdownOpen(false); }}
