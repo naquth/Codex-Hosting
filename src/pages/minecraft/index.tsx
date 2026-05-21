@@ -12,20 +12,20 @@ const currencies = {
 };
 
 const gamePlans = [
-  { id: 1,  name: 'GRASS PLAN',    location: 'USA',         planType: 'Ampere', ram: 2,  cpu: 100, ssd: 16, priceUSD: 13.99 },
-  { id: 2,  name: 'PLANK PLAN',    location: 'USA',         planType: 'Ampere', ram: 4,  cpu: 150, ssd: 16, priceUSD: 27.99 },
-  { id: 3,  name: 'STONE PLAN',    location: 'USA',         planType: 'Ampere', ram: 6,  cpu: 200, ssd: 24, priceUSD: 41.99 },
+  { id: 1,  name: 'GRASS PLAN',    location: 'USA',         planType: 'AMD', ram: 2,  cpu: 100, ssd: 16, priceUSD: 13.99 },
+  { id: 2,  name: 'PLANK PLAN',    location: 'USA',         planType: 'AMD', ram: 4,  cpu: 150, ssd: 16, priceUSD: 27.99 },
+  { id: 3,  name: 'STONE PLAN',    location: 'USA',         planType: 'AMD', ram: 6,  cpu: 200, ssd: 24, priceUSD: 41.99 },
   { id: 4,  name: 'IRON PLAN',     location: 'USA',         planType: 'Intel',  ram: 8,  cpu: 250, ssd: 32, priceUSD: 55.99 },
   { id: 5,  name: 'GOLD PLAN',     location: 'USA',         planType: 'Intel',  ram: 10, cpu: 300, ssd: 48, priceUSD: 66.99 },
   { id: 6,  name: 'DIAMOND PLAN',  location: 'USA',         planType: 'Intel',  ram: 12, cpu: 350, ssd: 48, priceUSD: 88.99 },
-  { id: 7,  name: 'WOOD PLAN',     location: 'Netherlands', planType: 'Ampere', ram: 2,  cpu: 100, ssd: 20, priceUSD: 14.99 },
-  { id: 8,  name: 'COBBLE PLAN',   location: 'Netherlands', planType: 'Ampere', ram: 4,  cpu: 150, ssd: 20, priceUSD: 29.99 },
+  { id: 7,  name: 'WOOD PLAN',     location: 'Netherlands', planType: 'AMD', ram: 2,  cpu: 100, ssd: 20, priceUSD: 14.99 },
+  { id: 8,  name: 'COBBLE PLAN',   location: 'Netherlands', planType: 'AMD', ram: 4,  cpu: 150, ssd: 20, priceUSD: 29.99 },
   { id: 9,  name: 'OBSIDIAN PLAN', location: 'Netherlands', planType: 'Intel',  ram: 8,  cpu: 250, ssd: 40, priceUSD: 59.99 },
   { id: 10, name: 'EMERALD PLAN',  location: 'Netherlands', planType: 'Intel',  ram: 12, cpu: 350, ssd: 60, priceUSD: 92.99 },
 ];
 
 const MinecraftPricing = () => {
-  const [planType, setPlanType] = useState('Ampere');
+  const [planType, setPlanType] = useState('AMD');
   const [location, setLocation] = useState('USA');
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -101,8 +101,8 @@ const MinecraftPricing = () => {
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2">1. Hardware</p>
             <div className="flex gap-1 bg-white/[0.03] border border-white/[0.07] rounded-xl p-1">
-              <FilterBtn active={planType === 'Ampere'} onClick={() => setPlanType('Ampere')}>Ampere Altra</FilterBtn>
-              <FilterBtn active={planType === 'Intel'} onClick={() => setPlanType('Intel')}>Intel Xeon</FilterBtn>
+              <FilterBtn active={planType === 'AMD'} onClick={() => setPlanType('AMD')}>AMD</FilterBtn>
+              <FilterBtn active={planType === 'Intel'} onClick={() => setPlanType('Intel')}>Intel</FilterBtn>
             </div>
           </div>
           {/* Location */}
