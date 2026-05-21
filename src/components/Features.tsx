@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { Cpu, Zap, ShieldCheck, HeartPulse, Settings, BarChart, Globe } from 'lucide-react';
 
 const featuresData = [
-  { icon: Cpu,        title: 'High Performance',   description: 'Latest-gen processors deliver consistent speed under any workload.',         span: 'col-span-1' },
-  { icon: Zap,        title: 'Low Latency',         description: 'Optimised network routes minimise lag across every region.',                  span: 'col-span-1' },
-  { icon: ShieldCheck,title: 'Advanced Security',   description: 'Multi-layered DDoS mitigation and real-time threat neutralisation keep your service online around the clock.', span: 'md:col-span-2' },
-  { icon: HeartPulse, title: 'Auto Recovery',       description: 'Automatic failover and backup systems restore service in seconds.',           span: 'col-span-1' },
-  { icon: Settings,   title: 'Full Control',        description: 'Powerful control panel with granular configuration options.',                  span: 'col-span-1' },
-  { icon: BarChart,   title: 'Resource Scaling',    description: 'Dynamic allocation adapts to demand so you never overpay.',                   span: 'col-span-1' },
-  { icon: Globe,      title: 'Global Network',      description: 'Strategically placed nodes worldwide for optimal connectivity.',              span: 'col-span-1' },
+  { icon: Cpu,        title: 'High Performance',   description: 'Latest-gen processors deliver consistent speed under any workload.'                                                  },
+  { icon: Zap,        title: 'Low Latency',         description: 'Optimised network routes minimise lag across every region.'                                                         },
+  { icon: ShieldCheck,title: 'Advanced Security',   description: 'Multi-layered DDoS mitigation and real-time threat neutralisation keep your service online around the clock.'       },
+  { icon: HeartPulse, title: 'Auto Recovery',       description: 'Automatic failover and backup systems restore service in seconds.'                                                  },
+  { icon: Settings,   title: 'Full Control',        description: 'Powerful control panel with granular configuration options.'                                                        },
+  { icon: BarChart,   title: 'Resource Scaling',    description: 'Dynamic allocation adapts to demand so you never overpay.'                                                          },
+  { icon: Globe,      title: 'Global Network',      description: 'Strategically placed nodes worldwide for optimal connectivity.'                                                     },
 ];
 
 const Features = () => (
@@ -45,7 +45,7 @@ const Features = () => (
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.06 }}
-            className={`bg-[#080b12] p-7 group hover:bg-[#0d1220] transition-colors duration-300 ${feature.span}`}
+            className={`bg-[#080b12] p-7 group hover:bg-[#0d1220] transition-colors duration-300`}
           >
             <div className="flex items-center justify-between mb-5">
               <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/15">
