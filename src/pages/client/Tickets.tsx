@@ -51,14 +51,14 @@ const Tickets = () => {
           </div>
           <button
             onClick={() => setShowNewTicket(true)}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+            className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm w-full sm:w-auto"
           >
             <Plus size={16} /> New Ticket
           </button>
         </motion.div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-3 gap-3 sm:gap-5">
           {[
             { label: 'Open',     value: tickets.filter(t => t.status === 'open').length,     color: 'text-blue-400'  },
             { label: 'Answered', value: tickets.filter(t => t.status === 'answered').length, color: 'text-green-400' },
@@ -69,10 +69,10 @@ const Tickets = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.07 }}
-              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 text-center"
+              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 text-center"
             >
-              <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-              <p className="text-sm text-gray-400 mt-1.5">{s.label}</p>
+              <p className={`text-2xl sm:text-3xl font-bold ${s.color}`}>{s.value}</p>
+              <p className="text-xs sm:text-sm text-gray-400 mt-1.5">{s.label}</p>
             </motion.div>
           ))}
         </div>
@@ -82,7 +82,7 @@ const Tickets = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7"
+          className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-7"
         >
           <div className="space-y-3">
             {tickets.map((ticket, index) => {
@@ -93,7 +93,7 @@ const Tickets = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.06 }}
-                  className="flex items-center justify-between p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-all cursor-pointer group"
+                  className="flex items-center justify-between p-4 sm:p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-all cursor-pointer group"
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/15 flex-shrink-0">

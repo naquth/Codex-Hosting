@@ -37,7 +37,7 @@ const Billing = () => {
         </motion.div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
           {[
             { label: 'Total Due',     value: `$${totalDue.toFixed(2)}`, color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
             { label: 'Paid (30d)',    value: '$1.17',      color: 'text-green-400',  bg: 'bg-green-500/10 border-green-500/20'   },
@@ -48,7 +48,7 @@ const Billing = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className={`border rounded-2xl p-6 ${card.bg}`}
+              className={`border rounded-2xl p-5 sm:p-6 ${card.bg}`}
             >
               <p className="text-sm text-gray-400">{card.label}</p>
               <p className={`text-2xl font-bold mt-2 ${card.color}`}>{card.value}</p>
