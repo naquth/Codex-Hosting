@@ -15,7 +15,6 @@ const discordPlans = [
   { name: 'Pro Plan',     priceUSD: 1.68, cpu: '100%', ram: '2 GB',   storage: '15 GB', popular: false },
   { name: 'Ultra Plan',   priceUSD: 3.35, cpu: '150%', ram: '4 GB',   storage: '20 GB', popular: false },
   { name: 'Elite Plan',   priceUSD: 5.02, cpu: '200%', ram: '6 GB',   storage: '30 GB', popular: false },
-  { name: 'LavaLink: V4', priceUSD: 0.96, cpu: '100%', ram: '2 GB',   storage: '5 GB',  popular: false },
 ];
 
 const features = [
