@@ -84,9 +84,9 @@ const Pricing = () => {
               <motion.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="absolute right-0 mt-1.5 w-36 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-xl p-1 z-10"
+                className="absolute right-0 mt-1.5 w-28 bg-[#0f1623] border border-white/[0.08] rounded-xl shadow-xl p-1 z-10"
               >
-                {Object.entries(currencies).map(([code, { symbol, name }]) => (
+                {Object.entries(currencies).map(([code, { symbol }]) => (
                   <button
                     key={code}
                     onClick={() => { setSelectedCurrency(code); setIsDropdownOpen(false); }}
@@ -96,7 +96,7 @@ const Pricing = () => {
                         : 'text-gray-300 hover:bg-white/[0.05]'
                     }`}
                   >
-                    {symbol} {code} – {name}
+                    {symbol} {code}
                   </button>
                 ))}
               </motion.div>
