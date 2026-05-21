@@ -16,15 +16,10 @@ const currencies = {
 };
 
 const vpsPlans = [
-  { id: 1,  name: 'USA-AMP-08GB', location: 'USA',         cpuType: 'Ampere', cores: 8,  ram: 8,  ssd: 256,  priceUSD: 40.99  },
-  { id: 2,  name: 'USA-AMP-16GB', location: 'USA',         cpuType: 'Ampere', cores: 10, ram: 16, ssd: 512,  priceUSD: 80.99  },
-  { id: 3,  name: 'USA-AMP-24GB', location: 'USA',         cpuType: 'Ampere', cores: 12, ram: 24, ssd: 768,  priceUSD: 120.99 },
   { id: 4,  name: 'USA-INT-08GB', location: 'USA',         cpuType: 'Intel',  cores: 6,  ram: 8,  ssd: 300,  priceUSD: 45.99  },
   { id: 5,  name: 'USA-INT-16GB', location: 'USA',         cpuType: 'Intel',  cores: 8,  ram: 16, ssd: 600,  priceUSD: 90.99  },
   { id: 6,  name: 'USA-AMD-08GB', location: 'USA',         cpuType: 'AMD',    cores: 8,  ram: 8,  ssd: 256,  priceUSD: 42.99  },
   { id: 7,  name: 'USA-AMD-16GB', location: 'USA',         cpuType: 'AMD',    cores: 12, ram: 16, ssd: 512,  priceUSD: 85.99  },
-  { id: 8,  name: 'NL-AMP-08GB',  location: 'Netherlands', cpuType: 'Ampere', cores: 8,  ram: 8,  ssd: 256,  priceUSD: 43.99  },
-  { id: 9,  name: 'NL-AMP-16GB',  location: 'Netherlands', cpuType: 'Ampere', cores: 10, ram: 16, ssd: 512,  priceUSD: 86.99  },
   { id: 10, name: 'NL-INT-08GB',  location: 'Netherlands', cpuType: 'Intel',  cores: 6,  ram: 8,  ssd: 300,  priceUSD: 48.99  },
   { id: 11, name: 'NL-INT-16GB',  location: 'Netherlands', cpuType: 'Intel',  cores: 8,  ram: 16, ssd: 600,  priceUSD: 97.99  },
   { id: 12, name: 'NL-INT-32GB',  location: 'Netherlands', cpuType: 'Intel',  cores: 12, ram: 32, ssd: 1200, priceUSD: 195.99 },
@@ -45,7 +40,7 @@ const PLANS_PER_PAGE = 4;
 
 const VpsPricing = () => {
   const [location, setLocation]           = useState('USA');
-  const [cpuType, setCpuType]             = useState('Ampere');
+  const [cpuType, setCpuType]             = useState('Intel');
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage]     = useState(1);
@@ -137,7 +132,6 @@ const VpsPricing = () => {
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2">2. CPU Type</p>
             <div className="flex gap-1 bg-white/[0.03] border border-white/[0.07] rounded-xl p-1">
-              <FilterBtn active={cpuType === 'Ampere'} onClick={() => setCpu('Ampere')}>Ampere</FilterBtn>
               <FilterBtn active={cpuType === 'Intel'}  onClick={() => setCpu('Intel')}>Intel</FilterBtn>
               <FilterBtn active={cpuType === 'AMD'}    onClick={() => setCpu('AMD')}>AMD</FilterBtn>
             </div>
