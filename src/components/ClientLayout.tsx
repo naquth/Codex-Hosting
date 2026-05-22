@@ -129,7 +129,7 @@ const ClientLayout = ({
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="flex-1 lg:ml-[272px] flex flex-col min-h-screen relative">
+      <div className="flex-1 lg:ml-[272px] flex flex-col min-h-screen relative overflow-x-hidden">
 
         {/* Top Bar */}
         <header className="sticky top-0 z-30 bg-[#080b12]/90 backdrop-blur-xl border-b border-white/[0.06]">
@@ -152,13 +152,13 @@ const ClientLayout = ({
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.14] transition-all duration-200"
+                  className="flex items-center gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.14] transition-all duration-200"
                 >
-                  <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                     {userName.charAt(0)}
                   </div>
                   <span className="hidden sm:block text-sm font-medium text-gray-300">{userName}</span>
-                  <ChevronDown size={16} className="text-gray-500" />
+                  <ChevronDown size={14} className="text-gray-500" />
                 </button>
 
                 <AnimatePresence>

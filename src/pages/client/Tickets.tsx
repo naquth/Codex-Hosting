@@ -93,35 +93,38 @@ const Tickets = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.06 }}
-                  className="flex items-center justify-between p-4 sm:p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-all cursor-pointer group"
+                  className="flex items-center gap-3 p-4 sm:p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-all cursor-pointer group overflow-hidden"
                 >
-                  <div className="flex items-start gap-4 flex-1 min-w-0">
-                    <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/15 flex-shrink-0">
-                      <TicketIcon size={18} className="text-blue-400" />
+                  {/* Icon */}
+                  <div className="p-2 bg-blue-500/10 rounded-xl border border-blue-500/15 flex-shrink-0 hidden sm:flex">
+                    <TicketIcon size={18} className="text-blue-400" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-medium text-gray-400">{ticket.id}</span>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 ${S.badge}`}>
+                        <S.icon size={10} />
+                        {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
+                      </span>
+                      <span className={`text-[10px] font-bold ${priorityStyle[ticket.priority]}`}>
+                        {ticket.priority.toUpperCase()}
+                      </span>
                     </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium text-gray-400">{ticket.id}</span>
-                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 ${S.badge}`}>
-                          <S.icon size={11} />
-                          {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
-                        </span>
-                        <span className={`text-xs font-semibold ${priorityStyle[ticket.priority]}`}>
-                          {ticket.priority.toUpperCase()}
-                        </span>
-                      </div>
-                      <p className="text-sm font-semibold text-white mt-1 truncate">{ticket.subject}</p>
-                      <div className="flex items-center gap-4 mt-1.5">
-                        <span className="text-xs text-gray-600 flex items-center gap-1.5">
-                          <Clock size={12} /> {ticket.lastReply}
-                        </span>
-                        <span className="text-xs text-gray-600 flex items-center gap-1.5">
-                          <MessageCircle size={12} /> {ticket.replies} replies
-                        </span>
-                      </div>
+                    <p className="text-sm font-semibold text-white mt-1 truncate">{ticket.subject}</p>
+                    <div className="flex items-center gap-3 mt-1">
+                      <span className="text-xs text-gray-600 flex items-center gap-1">
+                        <Clock size={11} /> {ticket.lastReply}
+                      </span>
+                      <span className="text-xs text-gray-600 flex items-center gap-1">
+                        <MessageCircle size={11} /> {ticket.replies}
+                      </span>
                     </div>
                   </div>
-                  <ChevronRight size={18} className="text-gray-600 group-hover:text-blue-400 transition-colors flex-shrink-0 ml-4" />
+
+                  {/* Arrow */}
+                  <ChevronRight size={16} className="text-gray-600 group-hover:text-blue-400 transition-colors flex-shrink-0" />
                 </motion.div>
               );
             })}
