@@ -23,7 +23,7 @@ const linkSections = [
   {
     title: 'Resources',
     links: [
-      { name: 'Documentation', href: '#' },
+      { name: 'Documentation', href: '/docs' },
       { name: 'Support Center', href: '/support' },
       { name: 'FAQ', href: '/#faq' },
       { name: 'Status', href: '/status' },

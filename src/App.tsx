@@ -21,6 +21,7 @@ import VpsPricing from './pages/vps';
 import LavaLinkPricing from './pages/lavalink';
 import AboutUs from './pages/aboutus';
 import Support from './pages/support';
+import Docs from './pages/docs';
 import TOS from './pages/tos';
 import PrivacyPolicy from './pages/privacy';
 import StatusPage from './pages/status';
@@ -71,6 +72,7 @@ const AppContent = () => {
           {/* ---- Rute Halaman More ---- */}
           <Route path="/about" element={<AboutUs />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/docs" element={<Docs />} />
           <Route path="/tos" element={<TOS />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/status" element={<StatusPage />} />
