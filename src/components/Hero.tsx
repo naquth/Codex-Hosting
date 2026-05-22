@@ -80,7 +80,7 @@ const Hero = () => {
             </p>
 
             <div className="mt-9 flex items-center gap-4">
-              <Link to="/#pricing">
+              <Link to="/client/login">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
