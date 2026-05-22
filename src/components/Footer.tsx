@@ -2,38 +2,40 @@ import { Link } from 'react-router-dom';
 import { Twitter, Instagram } from 'lucide-react';
 import DiscordLogo from '../icons/DiscordLogo';
 
+// external = true  → pakai <a href> biasa (hash anchors & external URLs)
+// external = false → pakai <Link to> react-router (internal routes)
 const linkSections = [
   {
     title: 'Products',
     links: [
-      { name: 'Bot Hosting', href: '/discord' },
-      { name: 'Game Servers', href: '/minecraft' },
-      { name: 'VPS Hosting', href: '/vps' },
-      { name: 'Pricing', href: '/#pricing' },
+      { name: 'Bot Hosting',  href: '/discord',    external: false },
+      { name: 'Game Servers', href: '/minecraft',  external: false },
+      { name: 'VPS Hosting',  href: '/vps',        external: false },
+      { name: 'Pricing',      href: '/#pricing',   external: true  },
     ],
   },
   {
     title: 'Company',
     links: [
-      { name: 'About Us', href: '/about' },
-      { name: 'Features', href: '/#features' },
-      { name: 'Contact', href: '/support' },
+      { name: 'About Us',  href: '/about',       external: false },
+      { name: 'Features',  href: '/#features',   external: true  },
+      { name: 'Contact',   href: '/support',     external: false },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { name: 'Documentation', href: '#' },
-      { name: 'Support Center', href: '/support' },
-      { name: 'FAQ', href: '/#faq' },
-      { name: 'Status', href: '/status' },
+      { name: 'Documentation', href: 'https://docs.codex.host', external: true  },
+      { name: 'Support Center', href: '/support',               external: false },
+      { name: 'FAQ',            href: '/#faq',                  external: true  },
+      { name: 'Status',         href: '/status',                external: false },
     ],
   },
   {
     title: 'Legal',
     links: [
-      { name: 'Terms of Service', href: '/tos' },
-      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Terms of Service', href: '/tos',     external: false },
+      { name: 'Privacy Policy',   href: '/privacy', external: false },
     ],
   },
 ];
@@ -76,12 +78,21 @@ const Footer = () => (
             <ul className="space-y-3">
               {section.links.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-gray-500 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      className="text-sm text-gray-500 hover:text-white transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-sm text-gray-500 hover:text-white transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
