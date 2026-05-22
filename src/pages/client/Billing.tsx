@@ -36,8 +36,8 @@ const Billing = () => {
           <p className="text-gray-400 mt-1 text-sm">Manage your invoices and payment methods.</p>
         </motion.div>
 
-        {/* Summary cards — 3 cols always, adapt padding */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* Summary cards — 1 col on mobile, 3 on tablet+ */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             { label: 'Total Due',     value: `$${totalDue.toFixed(2)}`, color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
             { label: 'Paid (30d)',    value: '$1.17',      color: 'text-green-400',  bg: 'bg-green-500/10 border-green-500/20'   },
@@ -48,10 +48,10 @@ const Billing = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className={`border rounded-2xl p-3 sm:p-5 ${card.bg}`}
+              className={`border rounded-2xl p-4 sm:p-5 ${card.bg}`}
             >
-              <p className="text-[11px] sm:text-sm text-gray-400">{card.label}</p>
-              <p className={`text-lg sm:text-2xl font-bold mt-1 ${card.color}`}>{card.value}</p>
+              <p className="text-sm text-gray-400">{card.label}</p>
+              <p className={`text-2xl font-bold mt-1 ${card.color}`}>{card.value}</p>
             </motion.div>
           ))}
         </div>

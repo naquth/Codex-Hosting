@@ -64,8 +64,8 @@ const Dashboard = () => {
           </Link>
         </motion.div>
 
-        {/* Stats Grid — 2 cols on mobile, 4 on desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Stats Grid — 1 col on mobile, 2 on tablet, 4 on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -76,13 +76,12 @@ const Dashboard = () => {
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="text-xs sm:text-sm text-gray-400 truncate">{stat.label}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-white mt-1.5">{stat.value}</p>
-                  <p className="text-[11px] sm:text-xs text-gray-500 mt-1 truncate">{stat.change}</p>
+                  <p className="text-sm text-gray-400">{stat.label}</p>
+                  <p className="text-2xl font-bold text-white mt-1.5">{stat.value}</p>
+                  <p className="text-xs text-gray-500 mt-1">{stat.change}</p>
                 </div>
-                <div className={`p-2 sm:p-3 rounded-xl border flex-shrink-0 ${colorMap[stat.color]}`}>
-                  <stat.icon size={16} className="sm:hidden" />
-                  <stat.icon size={20} className="hidden sm:block" />
+                <div className={`p-2.5 rounded-xl border flex-shrink-0 ${colorMap[stat.color]}`}>
+                  <stat.icon size={20} />
                 </div>
               </div>
             </motion.div>
