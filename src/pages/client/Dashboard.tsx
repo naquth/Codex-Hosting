@@ -42,46 +42,47 @@ const statusStyle: Record<string, string> = {
 const Dashboard = () => {
   return (
     <ClientLayout>
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-6">
 
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
         >
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Dashboard</h1>
-            <p className="text-gray-400 mt-1">Welcome back, John! Here's your overview.</p>
+            <p className="text-gray-400 mt-1 text-sm">Welcome back, John! Here's your overview.</p>
           </div>
           <Link
             to="/client/services"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+            className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-3 rounded-xl transition-colors text-sm w-full sm:w-auto"
           >
             <Plus size={16} />
             New Service
           </Link>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Stats Grid — 2 cols on mobile, 4 on desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 hover:border-white/[0.12] transition-colors"
+              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 hover:border-white/[0.12] transition-colors"
             >
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-gray-400">{stat.label}</p>
-                  <p className="text-2xl font-bold text-white mt-2">{stat.value}</p>
-                  <p className="text-xs text-gray-500 mt-1.5">{stat.change}</p>
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm text-gray-400 truncate">{stat.label}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white mt-1.5">{stat.value}</p>
+                  <p className="text-[11px] sm:text-xs text-gray-500 mt-1 truncate">{stat.change}</p>
                 </div>
-                <div className={`p-3 rounded-xl border ${colorMap[stat.color]}`}>
-                  <stat.icon size={20} />
+                <div className={`p-2 sm:p-3 rounded-xl border flex-shrink-0 ${colorMap[stat.color]}`}>
+                  <stat.icon size={16} className="sm:hidden" />
+                  <stat.icon size={20} className="hidden sm:block" />
                 </div>
               </div>
             </motion.div>
@@ -89,42 +90,39 @@ const Dashboard = () => {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
 
           {/* Services Table */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="lg:col-span-2 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7"
+            className="lg:col-span-2 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-white">My Services</h2>
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-base sm:text-lg font-semibold text-white">My Services</h2>
               <Link to="/client/services" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors">
                 View all <ArrowRight size={14} />
               </Link>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {services.map((svc) => (
                 <div
                   key={svc.name}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-colors gap-3"
+                  className="flex items-center justify-between p-3 sm:p-4 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-blue-500/25 transition-colors gap-3"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/15">
-                      <Server size={18} className="text-blue-400" />
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="p-2 bg-blue-500/10 rounded-xl border border-blue-500/15 flex-shrink-0">
+                      <Server size={16} className="text-blue-400" />
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-white">{svc.name}</p>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{svc.name}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{svc.type} · {svc.ram}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${statusStyle[svc.status]}`}>
-                      {svc.status.charAt(0).toUpperCase() + svc.status.slice(1)}
-                    </span>
-                    <span className="text-xs text-gray-500 hidden sm:block">exp. {svc.expires}</span>
-                  </div>
+                  <span className={`text-xs font-medium px-2.5 py-1 rounded-full flex-shrink-0 ${statusStyle[svc.status]}`}>
+                    {svc.status.charAt(0).toUpperCase() + svc.status.slice(1)}
+                  </span>
                 </div>
               ))}
             </div>
@@ -135,16 +133,16 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7"
+            className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6"
           >
-            <h2 className="text-lg font-semibold text-white mb-6">Recent Activity</h2>
-            <div className="space-y-5">
+            <h2 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Recent Activity</h2>
+            <div className="space-y-4">
               {recentActivity.map((item, index) => (
-                <div key={index} className="flex items-start gap-3.5">
-                  <item.icon size={17} className={`mt-0.5 flex-shrink-0 ${item.color}`} />
+                <div key={index} className="flex items-start gap-3">
+                  <item.icon size={16} className={`mt-0.5 flex-shrink-0 ${item.color}`} />
                   <div>
                     <p className="text-sm text-gray-300 leading-snug">{item.text}</p>
-                    <p className="text-xs text-gray-600 mt-1">{item.time}</p>
+                    <p className="text-xs text-gray-600 mt-0.5">{item.time}</p>
                   </div>
                 </div>
               ))}
@@ -157,10 +155,10 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-7"
+          className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6"
         >
-          <h2 className="text-lg font-semibold text-white mb-5">Quick Actions</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <h2 className="text-base sm:text-lg font-semibold text-white mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: 'Order Service', href: '/#pricing',       icon: Plus       },
               { label: 'Pay Invoice',   href: '/client/billing', icon: CreditCard },
@@ -170,10 +168,10 @@ const Dashboard = () => {
               <Link
                 key={action.label}
                 to={action.href}
-                className="flex flex-col items-center gap-3 p-5 bg-white/[0.03] hover:bg-blue-600/[0.08] border border-white/[0.06] hover:border-blue-500/25 rounded-xl transition-all duration-200 text-center group"
+                className="flex flex-col items-center gap-2.5 p-4 sm:p-5 bg-white/[0.03] hover:bg-blue-600/[0.08] border border-white/[0.06] hover:border-blue-500/25 rounded-xl transition-all duration-200 text-center group"
               >
-                <action.icon size={22} className="text-gray-400 group-hover:text-blue-400 transition-colors" />
-                <span className="text-sm text-gray-400 group-hover:text-white transition-colors font-medium">{action.label}</span>
+                <action.icon size={20} className="text-gray-400 group-hover:text-blue-400 transition-colors" />
+                <span className="text-xs sm:text-sm text-gray-400 group-hover:text-white transition-colors font-medium">{action.label}</span>
               </Link>
             ))}
           </div>

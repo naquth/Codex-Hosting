@@ -133,7 +133,7 @@ const ClientLayout = ({
 
         {/* Top Bar */}
         <header className="sticky top-0 z-30 bg-[#080b12]/90 backdrop-blur-xl border-b border-white/[0.06]">
-          <div className="flex items-center justify-between px-6 sm:px-8 h-18" style={{ height: '68px' }}>
+          <div className="flex items-center justify-between px-4 sm:px-8" style={{ height: '68px' }}>
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden text-gray-400 hover:text-white transition-colors p-1"
@@ -196,7 +196,7 @@ const ClientLayout = ({
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-6 sm:p-8 lg:p-10">
+        <main className="flex-1 p-4 sm:p-6 lg:p-10">
           {children}
         </main>
       </div>
