@@ -56,7 +56,7 @@ const Dashboard = () => {
             <p className="text-gray-400 mt-1 text-sm">Welcome back, John! Here's your overview.</p>
           </div>
           <Link
-            to="/client/services"
+            to="/client/pricing"
             className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-3 rounded-xl transition-colors text-sm w-full sm:w-auto"
           >
             <Plus size={16} />
@@ -159,7 +159,7 @@ const Dashboard = () => {
           <h2 className="text-base sm:text-lg font-semibold text-white mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { label: 'Order Service', href: '/#pricing',       icon: Plus       },
+              { label: 'Order Service', href: '/client/pricing',  icon: Plus       },
               { label: 'Pay Invoice',   href: '/client/billing', icon: CreditCard },
               { label: 'Open Ticket',   href: '/client/tickets', icon: TicketIcon },
               { label: 'View Status',   href: '/status',         icon: Activity   },

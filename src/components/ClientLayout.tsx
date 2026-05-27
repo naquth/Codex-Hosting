@@ -12,10 +12,12 @@ import {
   Bell,
   ChevronDown,
   User,
+  Tag,
 } from 'lucide-react';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard',       href: '/client/dashboard' },
+  { icon: Tag,             label: 'Order Service',   href: '/client/pricing'   },
   { icon: Server,          label: 'My Services',     href: '/client/services'  },
   { icon: CreditCard,      label: 'Billing',         href: '/client/billing'   },
   { icon: TicketIcon,      label: 'Support Tickets', href: '/client/tickets'   },

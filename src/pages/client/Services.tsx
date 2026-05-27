@@ -46,7 +46,7 @@ const Services = () => {
             <p className="text-gray-400 mt-1 text-sm">Manage and monitor all your hosted services.</p>
           </div>
           <Link
-            to="/#pricing"
+            to="/client/pricing"
             className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-3 rounded-xl transition-colors text-sm w-full sm:w-auto"
           >
             <Plus size={16} /> Order New Service
