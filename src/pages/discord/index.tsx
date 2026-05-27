@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Zap, HardDrive, Wifi, ShieldCheck, LifeBuoy, Clock, Check, ChevronDown } from 'lucide-react';
+import { Cpu, Zap, HardDrive, Wifi, ShieldCheck, LifeBuoy, Clock, Check, ChevronDown, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
 import nodejsImg from '@/assets/nodejs.jpg';
 
 const currencies = {
@@ -28,6 +30,23 @@ const DiscordBotPricing = () => {
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const cc = currencies[selectedCurrency as keyof typeof currencies];
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  const handleOrder = (plan: typeof discordPlans[0]) => {
+    addItem({
+      id: `discord-${plan.name}`,
+      name: plan.name,
+      service: 'Discord Bot Hosting',
+      priceUSD: plan.priceUSD,
+      specs: [
+        { label: 'CPU', value: plan.cpu },
+        { label: 'RAM', value: plan.ram },
+        { label: 'Storage', value: plan.storage },
+      ],
+    });
+    navigate('/cart');
+  };
 
   return (
     <div className="min-h-screen">
@@ -146,12 +165,14 @@ const DiscordBotPricing = () => {
               </div>
 
               <div className="p-5 pt-0">
-                <button className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                  plan.popular
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                    : 'bg-white/[0.06] hover:bg-white/[0.10] text-white border border-white/[0.08]'
-                }`}>
-                  Order Now
+                <button
+                  onClick={() => handleOrder(plan)}
+                  className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+                    plan.popular
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                      : 'bg-white/[0.06] hover:bg-white/[0.10] text-white border border-white/[0.08]'
+                  }`}>
+                  <ShoppingCart size={15} /> Order Now
                 </button>
               </div>
             </motion.div>

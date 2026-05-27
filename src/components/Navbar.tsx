@@ -21,7 +21,9 @@ const moreItems = [
   { icon: BarChart, name: 'Status Page', href: '/status' },
 ];
 
-const Navbar = () => {
+import CartIcon from './CartIcon';
+
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -140,6 +142,7 @@ const Navbar = () => {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-2">
+            <CartIcon />
             <Link
               to="/client/register"
               className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"

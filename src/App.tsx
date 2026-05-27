@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { CartProvider } from './context/CartContext';
 
 // Komponen Halaman Utama
 import Navbar from './components/Navbar';
@@ -25,6 +26,8 @@ import Docs from './pages/docs';
 import TOS from './pages/tos';
 import PrivacyPolicy from './pages/privacy';
 import StatusPage from './pages/status';
+import Cart from './pages/cart';
+import Checkout from './pages/checkout';
 
 // ====================================================
 // Import Client Area Pages
@@ -77,6 +80,10 @@ const AppContent = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/status" element={<StatusPage />} />
 
+          {/* ---- Cart & Checkout ---- */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+
           {/* ====================================================
               CLIENT AREA ROUTES
               ==================================================== */}
@@ -113,10 +120,12 @@ const Home = () => (
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <AppContent />
-    </Router>
+    <CartProvider>
+      <Router>
+        <ScrollToTop />
+        <AppContent />
+      </Router>
+    </CartProvider>
   );
 }
 

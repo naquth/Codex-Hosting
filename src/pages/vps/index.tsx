@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, HardDrive, MemoryStick, ChevronLeft, ChevronRight, ChevronDown, Check, Monitor } from 'lucide-react';
+import { Cpu, HardDrive, MemoryStick, ChevronLeft, ChevronRight, ChevronDown, Check, Monitor, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
 import ubuntuLogo  from '@/assets/ubuntu.png';
 import windowsLogo from '@/assets/windows.png';
 import fedoraLogo  from '@/assets/fedora.png';
@@ -49,6 +51,25 @@ const VpsPricing = () => {
   const filtered = vpsPlans.filter(p => p.location === location && p.cpuType === cpuType);
   const totalPages = Math.ceil(filtered.length / PLANS_PER_PAGE);
   const current = filtered.slice((currentPage - 1) * PLANS_PER_PAGE, currentPage * PLANS_PER_PAGE);
+
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  const handleOrder = (plan: typeof vpsPlans[0]) => {
+    addItem({
+      id: `vps-${plan.id}`,
+      name: plan.name,
+      service: 'VPS Hosting',
+      priceUSD: plan.priceUSD,
+      specs: [
+        { label: 'vCores', value: `${plan.cores}` },
+        { label: 'RAM', value: `${plan.ram} GB` },
+        { label: 'SSD', value: `${plan.ssd} GB NVMe` },
+        { label: 'Location', value: plan.location },
+      ],
+    });
+    navigate('/cart');
+  };
 
   const resetPage = () => setCurrentPage(1);
   const setLoc = (l: string) => { setLocation(l); resetPage(); };
@@ -176,8 +197,10 @@ const VpsPricing = () => {
                     <p className="text-lg font-bold text-white">{cc.symbol}{(plan.priceUSD * cc.rate).toFixed(2)}</p>
                     <p className="text-xs text-gray-500">per month</p>
                   </div>
-                  <button className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
-                    Order Now
+                  <button
+                    onClick={() => handleOrder(plan)}
+                    className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap flex items-center gap-1.5">
+                    <ShoppingCart size={13} /> Order Now
                   </button>
                 </div>
               </motion.div>

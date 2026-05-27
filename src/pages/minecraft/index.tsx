@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, HardDrive, MemoryStick, Shield, Check, ChevronDown } from 'lucide-react';
+import { Cpu, HardDrive, MemoryStick, Shield, Check, ChevronDown, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
 import minecraftLogo from '@/assets/minecraft.png';
 import USFlag from '@/icons/flags/USFlag';
 import NetherlandsFlag from '@/icons/flags/NetherlandsFlag';
@@ -31,6 +33,24 @@ const MinecraftPricing = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const cc = currencies[selectedCurrency as keyof typeof currencies];
   const filtered = gamePlans.filter(p => p.location === location && p.planType === planType);
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  const handleOrder = (plan: typeof gamePlans[0]) => {
+    addItem({
+      id: `minecraft-${plan.id}`,
+      name: plan.name,
+      service: 'Minecraft Hosting',
+      priceUSD: plan.priceUSD,
+      specs: [
+        { label: 'RAM', value: `${plan.ram} GB` },
+        { label: 'CPU', value: `${plan.cpu}%` },
+        { label: 'SSD', value: `${plan.ssd} GB` },
+        { label: 'Location', value: plan.location },
+      ],
+    });
+    navigate('/cart');
+  };
 
   const FilterBtn = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
     <button
@@ -181,8 +201,10 @@ const MinecraftPricing = () => {
                     <span className="text-2xl font-bold text-white">{cc.symbol}{(plan.priceUSD * cc.rate).toFixed(2)}</span>
                     <span className="text-xs text-gray-500">/mo</span>
                   </div>
-                  <button className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
-                    Order Now
+                  <button
+                    onClick={() => handleOrder(plan)}
+                    className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5">
+                    <ShoppingCart size={13} /> Order Now
                   </button>
                 </div>
               </motion.div>
