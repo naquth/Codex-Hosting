@@ -6,24 +6,23 @@ import {
   Info, HelpingHand, FileText, Shield, BarChart,
   LayoutDashboard, UserPlus,
 } from 'lucide-react';
+import CartIcon from './CartIcon';
 
 const serviceItems = [
-  { icon: Bot, name: 'Discord Bot', href: '/discord' },
+  { icon: Bot,    name: 'Discord Bot',      href: '/discord'  },
   { icon: Server, name: 'Minecraft Server', href: '/minecraft' },
-  { icon: Globe, name: 'VPS', href: '/vps' },
+  { icon: Globe,  name: 'VPS',              href: '/vps'      },
 ];
 
 const moreItems = [
-  { icon: Info, name: 'About Us', href: '/about' },
-  { icon: HelpingHand, name: 'Support', href: '/support' },
-  { icon: FileText, name: 'TOS', href: '/tos' },
-  { icon: Shield, name: 'Privacy Policy', href: '/privacy' },
-  { icon: BarChart, name: 'Status Page', href: '/status' },
+  { icon: Info,         name: 'About Us',      href: '/about'   },
+  { icon: HelpingHand,  name: 'Support',        href: '/support' },
+  { icon: FileText,     name: 'TOS',            href: '/tos'     },
+  { icon: Shield,       name: 'Privacy Policy', href: '/privacy' },
+  { icon: BarChart,     name: 'Status Page',    href: '/status'  },
 ];
 
-import CartIcon from './CartIcon';
-
-
+const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -61,6 +60,7 @@ import CartIcon from './CartIcon';
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="flex justify-between items-center h-16">
+
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img src="/codex.png" alt="CodeX" className="h-8 w-auto" />
@@ -71,9 +71,7 @@ import CartIcon from './CartIcon';
             <Link
               to="/"
               className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                location.pathname === '/'
-                  ? 'text-white'
-                  : 'text-gray-400 hover:text-white'
+                location.pathname === '/' ? 'text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
               Home
@@ -87,10 +85,7 @@ import CartIcon from './CartIcon';
             >
               <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
                 Services
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform duration-200 ${openDropdown === 'services' ? 'rotate-180' : ''}`}
-                />
+                <ChevronDown size={14} className={`transition-transform duration-200 ${openDropdown === 'services' ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {openDropdown === 'services' && (
@@ -117,10 +112,7 @@ import CartIcon from './CartIcon';
             >
               <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
                 More
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform duration-200 ${openDropdown === 'more' ? 'rotate-180' : ''}`}
-                />
+                <ChevronDown size={14} className={`transition-transform duration-200 ${openDropdown === 'more' ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {openDropdown === 'more' && (
@@ -159,12 +151,15 @@ import CartIcon from './CartIcon';
           </div>
 
           {/* Mobile hamburger */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
-          >
-            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <CartIcon />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-gray-400 hover:text-white transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -192,10 +187,7 @@ import CartIcon from './CartIcon';
                   className="w-full flex justify-between items-center px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                 >
                   Services
-                  <ChevronDown
-                    size={15}
-                    className={`transition-transform ${mobileDropdown === 'services' ? 'rotate-180' : ''}`}
-                  />
+                  <ChevronDown size={15} className={`transition-transform ${mobileDropdown === 'services' ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdown === 'services' && (
                   <div className="pl-3 mt-1 space-y-0.5">
@@ -220,10 +212,7 @@ import CartIcon from './CartIcon';
                   className="w-full flex justify-between items-center px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                 >
                   More
-                  <ChevronDown
-                    size={15}
-                    className={`transition-transform ${mobileDropdown === 'more' ? 'rotate-180' : ''}`}
-                  />
+                  <ChevronDown size={15} className={`transition-transform ${mobileDropdown === 'more' ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdown === 'more' && (
                   <div className="pl-3 mt-1 space-y-0.5">
