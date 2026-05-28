@@ -13,7 +13,9 @@ import {
   ChevronDown,
   User,
   Tag,
+  ShoppingCart,
 } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard',       href: '/client/dashboard' },
@@ -41,6 +43,7 @@ const ClientLayout = ({
   const navigate = useNavigate();
 
   const handleLogout = () => navigate('/client/login');
+  const { count: cartCount } = useCart();
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -144,6 +147,19 @@ const ClientLayout = ({
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
+              {/* Cart */}
+              <Link
+                to="/client/cart"
+                className="relative p-2.5 text-gray-400 hover:text-white transition-colors rounded-xl hover:bg-white/[0.06]"
+              >
+                <ShoppingCart size={20} />
+                {cartCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-blue-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
+                    {cartCount > 9 ? '9+' : cartCount}
+                  </span>
+                )}
+              </Link>
+
               {/* Notifications */}
               <button className="relative p-2.5 text-gray-400 hover:text-white transition-colors rounded-xl hover:bg-white/[0.06]">
                 <Bell size={20} />

@@ -73,7 +73,7 @@ const ClientPricing = () => {
 
   const handleOrder = (id: string, name: string, service: string, priceUSD: number, specs: { label: string; value: string }[]) => {
     addItem({ id, name, service, priceUSD, specs });
-    navigate('/cart');
+    navigate('/client/cart');
   };
 
   const FilterBtn = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (

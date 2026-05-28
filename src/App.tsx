@@ -39,6 +39,8 @@ import Services from './pages/client/Services';
 import Billing from './pages/client/Billing';
 import Tickets from './pages/client/Tickets';
 import ClientPricing from './pages/client/Pricing';
+import ClientCart from './pages/client/Cart';
+import ClientCheckout from './pages/client/Checkout';
 import AccountSettings from './pages/client/AccountSettings';
 
 // Komponen untuk scroll ke atas saat ganti halaman
@@ -93,6 +95,8 @@ const AppContent = () => {
           <Route path="/client/dashboard" element={<Dashboard />} />
           <Route path="/client/services" element={<Services />} />
           <Route path="/client/pricing" element={<ClientPricing />} />
+          <Route path="/client/cart" element={<ClientCart />} />
+          <Route path="/client/checkout" element={<ClientCheckout />} />
           <Route path="/client/billing" element={<Billing />} />
           <Route path="/client/tickets" element={<Tickets />} />
           <Route path="/client/settings" element={<AccountSettings />} />
