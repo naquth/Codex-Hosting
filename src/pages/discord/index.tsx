@@ -6,9 +6,9 @@ import { useCart } from '@/context/CartContext';
 import nodejsImg from '@/assets/nodejs.jpg';
 
 const currencies = {
-  USD: { symbol: '$', name: 'US Dollar', rate: 1 },
-  INR: { symbol: '₹', name: 'Indian Rupee', rate: 83.5 },
-  EUR: { symbol: '€', name: 'Euro', rate: 0.92 },
+  USD: { symbol: '$',  name: 'USD', rate: 1     },
+  INR: { symbol: '₹', name: 'INR', rate: 83.5  },
+  EUR: { symbol: '€', name: 'EUR', rate: 0.92  },
 };
 
 const discordPlans = [
