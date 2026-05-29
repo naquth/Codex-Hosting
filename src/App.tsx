@@ -30,6 +30,19 @@ import Cart from './pages/cart';
 import Checkout from './pages/checkout';
 
 // ====================================================
+// Import Admin Pages
+// ====================================================
+import AdminLogin     from './pages/admin/Login';
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminUsers     from './pages/admin/Users';
+import AdminServices  from './pages/admin/Services';
+import AdminOrders    from './pages/admin/Orders';
+import AdminInvoices  from './pages/admin/Invoices';
+import AdminTickets   from './pages/admin/Tickets';
+import AdminAnalytics from './pages/admin/Analytics';
+import AdminSettings  from './pages/admin/Settings';
+
+// ====================================================
 // Import Client Area Pages
 // ====================================================
 import Login from './pages/client/Login';
@@ -54,7 +67,7 @@ const ScrollToTop = () => {
 
 // Check if current path is a client area route (hides public navbar & footer)
 const isClientAreaRoute = (pathname: string) =>
-  pathname.startsWith('/client/');
+  pathname.startsWith('/client/') || pathname.startsWith('/admin/');
 
 const AppContent = () => {
   const { pathname } = useLocation();
@@ -100,6 +113,19 @@ const AppContent = () => {
           <Route path="/client/billing" element={<Billing />} />
           <Route path="/client/tickets" element={<Tickets />} />
           <Route path="/client/settings" element={<AccountSettings />} />
+
+          {/* ====================================================
+              ADMIN ROUTES
+              ==================================================== */}
+          <Route path="/admin/login"     element={<AdminLogin />}     />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/users"     element={<AdminUsers />}     />
+          <Route path="/admin/services"  element={<AdminServices />}  />
+          <Route path="/admin/orders"    element={<AdminOrders />}    />
+          <Route path="/admin/invoices"  element={<AdminInvoices />}  />
+          <Route path="/admin/tickets"   element={<AdminTickets />}   />
+          <Route path="/admin/analytics" element={<AdminAnalytics />} />
+          <Route path="/admin/settings"  element={<AdminSettings />}  />
 
           {/* ---- Rute Not Found ---- */}
           <Route path="*" element={<NotFound />} />
